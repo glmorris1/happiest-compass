@@ -1,0 +1,16 @@
+{
+  "name": "LanikaiBeachCompass",
+  "short_name": "LanikaiBeach",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0c4b5a",
+  "theme_color": "#0c4b5a",
+  "icons": [
+    {
+      "src": "../assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
