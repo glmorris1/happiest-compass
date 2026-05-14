@@ -10,14 +10,8 @@
   --leaf: #2f8c68;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  min-height: 100%;
-}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
 
 body {
   margin: 0;
@@ -37,9 +31,7 @@ body::before {
   background: linear-gradient(90deg, rgba(0, 29, 35, 0.72), rgba(0, 46, 54, 0.26) 50%, rgba(0, 26, 31, 0.66));
 }
 
-button {
-  font: inherit;
-}
+button { font: inherit; }
 
 .app-shell {
   width: min(100%, 520px);
@@ -61,9 +53,7 @@ button {
   backdrop-filter: blur(14px);
 }
 
-.status-panel {
-  text-align: center;
-}
+.status-panel { text-align: center; }
 
 .eyebrow {
   margin: 0 0 6px;
@@ -108,44 +98,18 @@ h1 {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
-  margin: -29px;
-  top: 12%;
+  width: 46px;
+  height: 46px;
+  margin: -23px;
+  top: 10%;
   left: 50%;
-  background: rgba(255, 209, 102, 0.96);
-  border: 2px solid rgba(247, 251, 242, 0.74);
-  border-radius: 50%;
-  box-shadow: 0 9px 24px rgba(255, 209, 102, 0.32);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.54));
 }
 
 .palm-icon {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   overflow: visible;
-}
-
-.palm-frond,
-.palm-trunk,
-.palm-sand {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.palm-frond {
-  stroke: #176a52;
-  stroke-width: 5;
-}
-
-.palm-trunk {
-  stroke: #8b5a2b;
-  stroke-width: 5;
-}
-
-.palm-sand {
-  stroke: #12363b;
-  stroke-width: 4;
 }
 
 .tick {
@@ -229,14 +193,8 @@ h1 {
   box-shadow: 0 16px 38px rgba(255, 209, 102, 0.22);
 }
 
-.start-button:active {
-  transform: translateY(1px);
-}
-
-.start-button.is-live {
-  background: var(--leaf);
-  color: #f2fff6;
-}
+.start-button:active { transform: translateY(1px); }
+.start-button.is-live { background: var(--leaf); color: #f2fff6; }
 
 .credit {
   color: rgba(247, 251, 242, 0.72);
@@ -256,6 +214,5 @@ h1 {
 @media (max-height: 720px) {
   .app-shell { gap: 11px; }
   .compass { width: min(72vw, 300px); }
-  .status-panel,
-  .distance-panel { padding: 13px; }
+  .status-panel, .distance-panel { padding: 13px; }
 }
