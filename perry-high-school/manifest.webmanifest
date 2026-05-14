@@ -1,0 +1,9 @@
+{
+  "name": "PerryHighSchoolCompass",
+  "short_name": "PerryCompass",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#17215f",
+  "theme_color": "#17215f",
+  "icons": []
+}
