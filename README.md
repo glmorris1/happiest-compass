@@ -2,6 +2,11 @@
 
 A static mobile web app. It asks for GPS and device-orientation access, then points the compass needle toward one saved destination and shows distance in miles or feet.
 
+## Pages
+
+- Happiest Compass: `https://glmorris1.github.io/happiest-compass/`
+- Lanikai Beach Compass: `https://glmorris1.github.io/happiest-compass/lanikai-beach/`
+
 ## Run locally
 
 Open `index.html` directly, or serve the folder:
@@ -21,8 +26,8 @@ This repository includes a GitHub Actions workflow at `.github/workflows/pages.y
 3. Under Build and deployment, choose GitHub Actions.
 4. Push to `main` or run the workflow manually.
 
-The app will publish at `https://glmorris1.github.io/happiest-compass/`.
+The main app will publish at `https://glmorris1.github.io/happiest-compass/`, and the Lanikai Beach page will publish at `https://glmorris1.github.io/happiest-compass/lanikai-beach/`.
 
 ## Adjust the location
 
-Edit the `DESTINATIONS` array at the top of `app.js`.
+Edit the `DESTINATIONS` array at the top of `app.js`, or edit the page-specific target in `lanikai-beach/app.js`.
