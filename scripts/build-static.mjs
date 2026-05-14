@@ -18,6 +18,7 @@ await copyIfPresent("assets/app-icon-1024.png", "dist/assets/app-icon-1024.png")
 await copyIfPresent("assets/apple-touch-icon.png", "dist/assets/apple-touch-icon.png");
 await copyIfPresent("assets/share-thumbnail-360.png", "dist/assets/share-thumbnail-360.png");
 await copyIfPresent("lanikai-beach", "dist/lanikai-beach");
+await copyIfPresent("perry-high-school", "dist/perry-high-school");
 await cp("minis.config.json", "dist/minis.config.json");
 
 async function copyIfPresent(from, to) {
