@@ -15,6 +15,8 @@ await mkdir("dist/assets", { recursive: true });
 
 await Promise.all(files.map((file) => cp(file, `dist/${file}`)));
 await copyIfPresent("assets/app-icon-1024.png", "dist/assets/app-icon-1024.png");
+await copyIfPresent("assets/app-icon-512.png", "dist/assets/app-icon-512.png");
+await copyIfPresent("assets/apple-touch-icon.png", "dist/assets/apple-touch-icon.png");
 await copyIfPresent("assets/share-thumbnail-360.png", "dist/assets/share-thumbnail-360.png");
 await cp("minis.config.json", "dist/minis.config.json");
 
