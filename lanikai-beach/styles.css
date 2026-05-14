@@ -98,12 +98,12 @@ h1 {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
-  margin: -23px;
-  top: 10%;
+  width: 58px;
+  height: 58px;
+  margin: -29px;
+  top: 9.5%;
   left: 50%;
-  font-size: 2.05rem;
+  font-size: 3rem;
   line-height: 1;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.54));
 }
