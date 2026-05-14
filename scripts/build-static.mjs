@@ -1,4 +1,4 @@
-import { cp, mkdir, rm } from "node:fs/promises";
+import { access, cp, mkdir, rm } from "node:fs/promises";
 
 const files = [
   "index.html",
@@ -14,6 +14,15 @@ await mkdir("dist", { recursive: true });
 await mkdir("dist/assets", { recursive: true });
 
 await Promise.all(files.map((file) => cp(file, `dist/${file}`)));
-await cp("assets/app-icon-1024.png", "dist/assets/app-icon-1024.png");
-await cp("assets/share-thumbnail-360.png", "dist/assets/share-thumbnail-360.png");
+await copyIfPresent("assets/app-icon-1024.png", "dist/assets/app-icon-1024.png");
+await copyIfPresent("assets/share-thumbnail-360.png", "dist/assets/share-thumbnail-360.png");
 await cp("minis.config.json", "dist/minis.config.json");
+
+async function copyIfPresent(from, to) {
+  try {
+    await access(from);
+    await cp(from, to);
+  } catch {
+    // Optional marketing assets are not required for the web app to run.
+  }
+}
