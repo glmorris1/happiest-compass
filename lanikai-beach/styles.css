@@ -103,13 +103,9 @@ h1 {
   margin: -23px;
   top: 10%;
   left: 50%;
+  font-size: 2.05rem;
+  line-height: 1;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.54));
-}
-
-.palm-icon {
-  width: 46px;
-  height: 46px;
-  overflow: visible;
 }
 
 .tick {
@@ -120,7 +116,7 @@ h1 {
 }
 
 .tick-0 { transform: rotate(0deg); }
-.tick-30 { transform: rotate(30deg); }
+tick-30 { transform: rotate(30deg); }
 .tick-60 { transform: rotate(60deg); }
 .tick-90 { transform: rotate(90deg); }
 .tick-120 { transform: rotate(120deg); }
