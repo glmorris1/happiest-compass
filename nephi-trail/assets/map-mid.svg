@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 3300" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="mist" x1="0" x2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#ffffff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#c3f5ff" stop-opacity=".76"/>
+      <stop offset=".46" stop-color="#37b7d1" stop-opacity=".52"/>
+      <stop offset="1" stop-color="#095d81" stop-opacity=".66"/>
+    </linearGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+
+  <g opacity=".9">
+    <path fill="url(#mist)" filter="url(#soft)" d="M-60 520c170-55 305-44 455 0s297 44 565-26v108c-249 66-426 60-594 12s-282-40-426 12Z"/>
+    <path fill="url(#mist)" filter="url(#soft)" d="M-90 1705c220-72 355-51 520-3 178 52 305 42 560-26v128c-244 65-407 70-585 14-166-52-306-54-495 10Z"/>
+    <path fill="url(#mist)" filter="url(#soft)" d="M-80 2240c176-85 345-90 515-28 168 61 292 56 532-32v165c-235 83-395 87-575 20-172-64-298-58-472 28Z"/>
+  </g>
+
+  <g opacity=".8">
+    <path fill="url(#water)" d="M625 1210c44 96 31 174-38 237-59 54-73 118-41 191 36 82 3 158-97 229l-31-47c69-52 89-103 58-157-50-90-30-183 61-279 44-46 49-96 15-149Z"/>
+    <path fill="none" stroke="#e9fdff" stroke-linecap="round" stroke-width="8" opacity=".65" d="M610 1235c22 70 4 124-54 163M508 1648c24 62-2 113-78 154"/>
+    <path fill="#dff8ff" opacity=".68" d="M674 1820c78 10 149 37 212 82v56c-61-31-128-50-202-54-55-3-110 6-164 26l-18-46c52-40 109-61 172-64Z"/>
+    <path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="7" opacity=".68" d="M666 1856c72 1 137 19 195 55M560 1895c51-24 102-35 153-31"/>
+  </g>
+
+  <g fill="#ffe28b" opacity=".82">
+    <circle cx="190" cy="252" r="4"/>
+    <circle cx="692" cy="382" r="3"/>
+    <circle cx="738" cy="2300" r="4"/>
+    <circle cx="688" cy="2595" r="3"/>
+    <circle cx="790" cy="2870" r="4"/>
+    <circle cx="168" cy="2978" r="3"/>
+  </g>
+
+  <g stroke="#ffcf68" stroke-linecap="round" opacity=".9">
+    <path stroke-width="12" d="M187 292l10-24 10 24"/>
+    <path stroke-width="9" d="M728 2320l8-20 8 20"/>
+    <path stroke-width="9" d="M770 2795l8-20 8 20"/>
+  </g>
+</svg>

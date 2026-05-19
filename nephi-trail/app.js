@@ -1,150 +1,267 @@
-const chapters = Array.from({ length: 22 }, (_, index) => ({
-  chapter: index + 1,
-  label: `1 Nephi ${index + 1}`,
-}));
-
-const points = [
-  [14, 88],
-  [25, 81],
-  [42, 84],
-  [58, 77],
-  [47, 68],
-  [30, 64],
-  [18, 55],
-  [34, 49],
-  [52, 53],
-  [69, 47],
-  [82, 39],
-  [68, 32],
-  [50, 28],
-  [32, 23],
-  [18, 16],
-  [34, 11],
-  [54, 15],
-  [74, 12],
-  [86, 19],
-  [76, 27],
-  [88, 34],
-  [72, 42],
+const chapters = [
+  { chapter: 1, label: "1 Nephi 1", biome: "jerusalem", x: 24, y: 190 },
+  { chapter: 2, label: "1 Nephi 2", biome: "jerusalem", x: 42, y: 285 },
+  { chapter: 3, label: "1 Nephi 3", biome: "jerusalem", x: 62, y: 338 },
+  { chapter: 4, label: "1 Nephi 4", biome: "jerusalem", x: 72, y: 405 },
+  { chapter: 5, label: "1 Nephi 5", biome: "wilderness", x: 63, y: 548 },
+  { chapter: 6, label: "1 Nephi 6", biome: "wilderness", x: 39, y: 610 },
+  { chapter: 7, label: "1 Nephi 7", biome: "wilderness", x: 25, y: 680 },
+  { chapter: 8, label: "1 Nephi 8", biome: "wilderness", x: 38, y: 815 },
+  { chapter: 9, label: "1 Nephi 9", biome: "wilderness", x: 60, y: 890 },
+  { chapter: 10, label: "1 Nephi 10", biome: "wilderness", x: 75, y: 1000 },
+  { chapter: 11, label: "1 Nephi 11", biome: "coast", x: 66, y: 1145 },
+  { chapter: 12, label: "1 Nephi 12", biome: "coast", x: 44, y: 1245 },
+  { chapter: 13, label: "1 Nephi 13", biome: "coast", x: 33, y: 1350 },
+  { chapter: 14, label: "1 Nephi 14", biome: "coast", x: 47, y: 1495 },
+  { chapter: 15, label: "1 Nephi 15", biome: "coast", x: 65, y: 1600 },
+  { chapter: 16, label: "1 Nephi 16", biome: "coast", x: 70, y: 1680 },
+  { chapter: 17, label: "1 Nephi 17", biome: "coast", x: 48, y: 1845 },
+  { chapter: 18, label: "1 Nephi 18", biome: "transition", x: 29, y: 2040 },
+  { chapter: 19, label: "1 Nephi 19", biome: "jungle", x: 43, y: 2265 },
+  { chapter: 20, label: "1 Nephi 20", biome: "jungle", x: 68, y: 2420 },
+  { chapter: 21, label: "1 Nephi 21", biome: "jungle", x: 45, y: 2740 },
+  { chapter: 22, label: "1 Nephi 22", biome: "jungle", x: 76, y: 3150 },
 ];
 
-const storageKey = "nephi-trail-current-chapter";
+const storageKey = "nephi-journey-current-chapter";
 const nodesContainer = document.querySelector("#nodes");
-const pathLayer = document.querySelector("#pathLayer");
+const mapWorld = document.querySelector("#mapWorld");
+const mapScroll = document.querySelector("#mapScroll");
 const traveler = document.querySelector("#traveler");
 const chapterStatus = document.querySelector("#chapterStatus");
 const meterFill = document.querySelector("#meterFill");
+const progressPercent = document.querySelector("#progressPercent");
+const completedText = document.querySelector("#completedText");
 const nextButton = document.querySelector("#nextButton");
 const backButton = document.querySelector("#backButton");
 const resetButton = document.querySelector("#resetButton");
+const routeGlow = document.querySelector("#routeGlow");
+const effectsCanvas = document.querySelector("#effectsCanvas");
+const effectsContext = effectsCanvas.getContext("2d");
+const visualYOffset = 120;
 
 let currentIndex = readSavedIndex();
+let particles = [];
+let dragState = null;
 
 function readSavedIndex() {
-  const stored = Number(localStorage.getItem(storageKey));
-  if (Number.isInteger(stored) && stored >= 0 && stored < chapters.length) {
-    return stored;
-  }
-
-  return 0;
+  const saved = Number(localStorage.getItem(storageKey));
+  return Number.isInteger(saved) && saved >= 0 && saved < chapters.length ? saved : 0;
 }
 
 function saveIndex() {
   localStorage.setItem(storageKey, String(currentIndex));
 }
 
-function renderPath() {
-  pathLayer.innerHTML = "";
-
-  points.slice(0, -1).forEach((start, index) => {
-    const end = points[index + 1];
-    const segment = document.createElement("span");
-    const dx = end[0] - start[0];
-    const dy = end[1] - start[1];
-    const length = Math.hypot(dx, dy);
-    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-
-    segment.className = "path-segment";
-    segment.style.left = `${start[0]}%`;
-    segment.style.top = `${start[1]}%`;
-    segment.style.width = `${length}%`;
-    segment.style.transform = `rotate(${angle}deg)`;
-    pathLayer.append(segment);
-  });
+function markerSvg(chapter) {
+  return `
+    <svg class="marker-svg" viewBox="0 0 92 92" aria-hidden="true">
+      <defs>
+        <radialGradient id="stone-${chapter}" cx="35%" cy="25%" r="72%">
+          <stop offset="0%" stop-color="#fff0ba"></stop>
+          <stop offset="43%" stop-color="#c9b18a"></stop>
+          <stop offset="100%" stop-color="#6f6251"></stop>
+        </radialGradient>
+        <linearGradient id="gold-${chapter}" x1="20%" x2="80%" y1="0%" y2="100%">
+          <stop offset="0%" stop-color="#fff1a8"></stop>
+          <stop offset="48%" stop-color="#d79b34"></stop>
+          <stop offset="100%" stop-color="#7f4c1c"></stop>
+        </linearGradient>
+      </defs>
+      <ellipse class="marker-ground" cx="46" cy="76" rx="34" ry="10"></ellipse>
+      <circle class="marker-rim" cx="46" cy="43" r="34" fill="url(#gold-${chapter})"></circle>
+      <circle class="marker-face" cx="46" cy="41" r="26" fill="url(#stone-${chapter})"></circle>
+      <path class="marker-chip" d="M30 31c7-8 19-11 30-5"></path>
+      <path class="marker-check" d="M30 43l10 10 22-25"></path>
+    </svg>
+    <span class="marker-number">${chapter}</span>
+  `;
 }
 
 function renderNodes() {
   nodesContainer.innerHTML = "";
 
   chapters.forEach((item, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "chapter-node";
-    button.dataset.index = String(index);
-    button.style.left = `${points[index][0]}%`;
-    button.style.top = `${points[index][1]}%`;
-    button.setAttribute("aria-label", `${item.label}, ${statusFor(index)}`);
-    button.innerHTML = `<span>${item.chapter}</span>`;
-    button.addEventListener("click", () => moveTo(index));
-    nodesContainer.append(button);
+    const node = document.createElement("button");
+    node.type = "button";
+    node.className = `chapter-node biome-${item.biome}`;
+    node.dataset.index = String(index);
+    node.style.left = `${item.x}%`;
+    node.style.top = `${item.y + visualYOffset}px`;
+    node.setAttribute("aria-label", `${item.label}, ${statusFor(index)}`);
+    node.innerHTML = markerSvg(item.chapter);
+    node.addEventListener("click", () => moveTo(index));
+    nodesContainer.append(node);
   });
 }
 
 function statusFor(index) {
   if (index < currentIndex) return "completed";
   if (index === currentIndex) return "current";
-  return "not reached";
+  return "locked";
 }
 
 function moveTo(index) {
   if (index === currentIndex) return;
 
+  const wasForward = index > currentIndex;
   currentIndex = index;
   saveIndex();
   traveler.classList.add("walking");
-  updateView();
-  window.setTimeout(() => traveler.classList.remove("walking"), 760);
+  updateView(true);
+
+  if (wasForward) {
+    burstAt(chapters[index]);
+  }
+
+  window.setTimeout(() => traveler.classList.remove("walking"), 820);
 }
 
-function updateView() {
+function updateView(animateCamera = false) {
+  const completed = currentIndex;
+  const percent = Math.round((completed / (chapters.length - 1)) * 100);
+
   document.querySelectorAll(".chapter-node").forEach((node, index) => {
-    node.classList.toggle("done", index < currentIndex);
-    node.classList.toggle("current", index === currentIndex);
-    node.classList.toggle("locked", index > currentIndex);
+    node.classList.toggle("is-completed", index < currentIndex);
+    node.classList.toggle("is-current", index === currentIndex);
+    node.classList.toggle("is-locked", index > currentIndex);
     node.setAttribute("aria-label", `${chapters[index].label}, ${statusFor(index)}`);
   });
 
-  document.querySelectorAll(".path-segment").forEach((segment, index) => {
-    segment.classList.toggle("complete", index < currentIndex);
-  });
+  const point = chapters[currentIndex];
+  traveler.style.left = `${point.x}%`;
+  traveler.style.top = `${point.y + visualYOffset}px`;
+  traveler.className = `explorer biome-${point.biome}${traveler.classList.contains("walking") ? " walking" : ""}`;
 
-  const point = points[currentIndex];
-  traveler.style.left = `${point[0]}%`;
-  traveler.style.top = `${point[1]}%`;
-  chapterStatus.textContent = chapters[currentIndex].label;
-  meterFill.style.width = `${(currentIndex / (chapters.length - 1)) * 100}%`;
+  chapterStatus.textContent = point.label;
+  meterFill.style.width = `${percent}%`;
+  progressPercent.textContent = `${percent}%`;
+  completedText.textContent = `Chapters Completed: ${completed} / ${chapters.length}`;
+  routeGlow.style.strokeDashoffset = String(100 - percent);
   backButton.disabled = currentIndex === 0;
   nextButton.disabled = currentIndex === chapters.length - 1;
+
+  centerOn(point, animateCamera);
+}
+
+function centerOn(point, smooth = true) {
+  const viewportHeight = mapScroll.clientHeight;
+  const target = Math.max(0, point.y + visualYOffset - viewportHeight * 0.48);
+  mapScroll.scrollTo({ top: target, behavior: smooth ? "smooth" : "auto" });
+}
+
+function burstAt(point) {
+  const width = mapWorld.clientWidth;
+  const originX = (point.x / 100) * width;
+  const originY = point.y + visualYOffset;
+
+  for (let index = 0; index < 26; index += 1) {
+    const angle = Math.random() * Math.PI * 2;
+    particles.push({
+      x: originX,
+      y: originY,
+      vx: Math.cos(angle) * (1.2 + Math.random() * 2.6),
+      vy: Math.sin(angle) * (1.2 + Math.random() * 2.6) - 1.4,
+      life: 52 + Math.random() * 22,
+      maxLife: 74,
+      size: 3 + Math.random() * 5,
+      hue: Math.random() > 0.45 ? "#f6d36a" : "#7bd67d",
+    });
+  }
+}
+
+function resizeCanvas() {
+  const ratio = window.devicePixelRatio || 1;
+  effectsCanvas.width = mapWorld.clientWidth * ratio;
+  effectsCanvas.height = mapWorld.clientHeight * ratio;
+  effectsCanvas.style.width = `${mapWorld.clientWidth}px`;
+  effectsCanvas.style.height = `${mapWorld.clientHeight}px`;
+  effectsContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+}
+
+function drawParticles() {
+  effectsContext.clearRect(0, 0, mapWorld.clientWidth, mapWorld.clientHeight);
+  particles = particles.filter((particle) => particle.life > 0);
+
+  particles.forEach((particle) => {
+    particle.life -= 1;
+    particle.x += particle.vx;
+    particle.y += particle.vy;
+    particle.vy += 0.035;
+
+    const alpha = Math.max(0, particle.life / particle.maxLife);
+    effectsContext.globalAlpha = alpha;
+    effectsContext.fillStyle = particle.hue;
+    effectsContext.beginPath();
+    effectsContext.arc(particle.x, particle.y, particle.size * alpha, 0, Math.PI * 2);
+    effectsContext.fill();
+  });
+
+  effectsContext.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+
+function setupDragScroll() {
+  mapScroll.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("button")) return;
+    dragState = {
+      pointerId: event.pointerId,
+      y: event.clientY,
+      scrollTop: mapScroll.scrollTop,
+      velocity: 0,
+      lastY: event.clientY,
+      lastTime: performance.now(),
+    };
+    mapScroll.setPointerCapture(event.pointerId);
+    mapScroll.classList.add("is-dragging");
+  });
+
+  mapScroll.addEventListener("pointermove", (event) => {
+    if (!dragState || dragState.pointerId !== event.pointerId) return;
+    const now = performance.now();
+    const dy = event.clientY - dragState.y;
+    mapScroll.scrollTop = dragState.scrollTop - dy;
+    dragState.velocity = (event.clientY - dragState.lastY) / Math.max(1, now - dragState.lastTime);
+    dragState.lastY = event.clientY;
+    dragState.lastTime = now;
+  });
+
+  mapScroll.addEventListener("pointerup", endDrag);
+  mapScroll.addEventListener("pointercancel", endDrag);
+}
+
+function endDrag(event) {
+  if (!dragState || dragState.pointerId !== event.pointerId) return;
+  const velocity = dragState.velocity * -900;
+  mapScroll.classList.remove("is-dragging");
+  dragState = null;
+
+  if (Math.abs(velocity) > 60) {
+    mapScroll.scrollBy({ top: velocity, behavior: "smooth" });
+  }
 }
 
 nextButton.addEventListener("click", () => {
-  if (currentIndex < chapters.length - 1) {
-    moveTo(currentIndex + 1);
-  }
+  if (currentIndex < chapters.length - 1) moveTo(currentIndex + 1);
 });
 
 backButton.addEventListener("click", () => {
-  if (currentIndex > 0) {
-    moveTo(currentIndex - 1);
-  }
+  if (currentIndex > 0) moveTo(currentIndex - 1);
 });
 
 resetButton.addEventListener("click", () => {
   currentIndex = 0;
   saveIndex();
-  updateView();
+  updateView(true);
 });
 
-renderPath();
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  updateView(false);
+});
+
 renderNodes();
-updateView();
+resizeCanvas();
+setupDragScroll();
+updateView(false);
+drawParticles();
