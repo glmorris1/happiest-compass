@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nephi Trail</title>
+    <meta name="description" content="A playful reading tracker for 1 Nephi.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar" aria-label="Reading progress">
+        <div>
+          <p class="eyebrow">Book of Mormon</p>
+          <h1>1 Nephi Trail</h1>
+        </div>
+        <div class="progress-card" aria-live="polite">
+          <span class="progress-label">Current chapter</span>
+          <strong id="chapterStatus">1 Nephi 1</strong>
+          <div class="meter" aria-hidden="true">
+            <span id="meterFill"></span>
+          </div>
+        </div>
+      </header>
+
+      <section class="map-stage" aria-label="Map of 1 Nephi chapters">
+        <div class="sky-ornament sun" aria-hidden="true"></div>
+        <div class="sky-ornament cloud cloud-one" aria-hidden="true"></div>
+        <div class="sky-ornament cloud cloud-two" aria-hidden="true"></div>
+
+        <svg class="backdrop" viewBox="0 0 1200 1900" role="img" aria-label="Cartoon old Mesoamerica map background">
+          <defs>
+            <linearGradient id="riverGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#76d0d3"></stop>
+              <stop offset="100%" stop-color="#2f91a5"></stop>
+            </linearGradient>
+            <linearGradient id="mountainGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+              <stop offset="0%" stop-color="#87a86f"></stop>
+              <stop offset="100%" stop-color="#3d714c"></stop>
+            </linearGradient>
+          </defs>
+
+          <path class="river" d="M75 130 C210 245 215 350 155 470 C85 610 190 690 335 760 C520 850 475 1040 342 1130 C205 1220 225 1395 390 1485 C545 1568 660 1650 610 1815"></path>
+
+          <g class="mountain-band">
+            <path d="M0 292 L95 165 L190 294 Z"></path>
+            <path d="M135 302 L260 118 L395 302 Z"></path>
+            <path d="M338 305 L445 156 L570 305 Z"></path>
+            <path d="M942 355 L1048 180 L1175 355 Z"></path>
+            <path d="M805 380 L918 210 L1038 380 Z"></path>
+          </g>
+
+          <g class="temple temple-left">
+            <path d="M92 846 H308 L274 910 H126 Z"></path>
+            <path d="M122 910 H278 L246 976 H154 Z"></path>
+            <path d="M154 976 H246 L226 1038 H174 Z"></path>
+            <path d="M174 790 H226 L260 846 H140 Z"></path>
+          </g>
+
+          <g class="temple temple-right">
+            <path d="M865 1120 H1088 L1054 1184 H900 Z"></path>
+            <path d="M899 1184 H1054 L1024 1250 H932 Z"></path>
+            <path d="M932 1250 H1024 L1006 1316 H950 Z"></path>
+            <path d="M950 1064 H1006 L1044 1120 H913 Z"></path>
+          </g>
+
+          <g class="jungle">
+            <path d="M70 1640 C120 1538 245 1530 302 1640 Z"></path>
+            <path d="M178 1700 C244 1570 390 1588 438 1700 Z"></path>
+            <path d="M805 1630 C860 1515 1000 1518 1070 1630 Z"></path>
+            <path d="M948 1705 C1014 1580 1150 1592 1195 1705 Z"></path>
+          </g>
+
+          <g class="glyphs" aria-hidden="true">
+            <circle cx="102" cy="610" r="22"></circle>
+            <path d="M92 610 H112 M102 600 V620"></path>
+            <rect x="1010" y="505" width="54" height="54" rx="10"></rect>
+            <path d="M1024 532 C1036 510 1052 510 1058 532 C1046 552 1030 552 1024 532"></path>
+            <circle cx="845" cy="818" r="24"></circle>
+            <path d="M830 818 C842 800 858 800 870 818 C858 837 842 837 830 818"></path>
+          </g>
+        </svg>
+
+        <div class="path-layer" id="pathLayer" aria-hidden="true"></div>
+        <div class="character" id="traveler" aria-hidden="true">
+          <div class="head">
+            <span class="hair"></span>
+            <span class="face-mark face-mark-left"></span>
+            <span class="face-mark face-mark-right"></span>
+          </div>
+          <div class="body">
+            <span class="cloak"></span>
+            <span class="belt"></span>
+          </div>
+          <span class="leg leg-left"></span>
+          <span class="leg leg-right"></span>
+        </div>
+        <div class="nodes" id="nodes"></div>
+      </section>
+
+      <footer class="actionbar">
+        <button class="secondary-button" id="backButton" type="button">Back one chapter</button>
+        <button class="primary-button" id="nextButton" type="button">Read next chapter</button>
+        <button class="secondary-button" id="resetButton" type="button">Reset trail</button>
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
