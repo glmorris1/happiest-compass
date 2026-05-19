@@ -6,7 +6,8 @@
   --gold-light: #fff1a8;
   --jade: #5fb75a;
   --shadow: rgba(30, 19, 11, 0.42);
-  --world-height: 3300px;
+  --world-height: 3680px;
+  --slice-height: 920px;
 }
 
 * {
@@ -56,7 +57,7 @@ button {
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(255, 238, 198, 0.98), rgba(221, 174, 103, 0.96)),
-    url("assets/map-painterly.png");
+    url("assets/map-jerusalem.png");
   background-size: 900px auto;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25), inset 0 0 0 2px rgba(255, 255, 255, 0.32);
 }
@@ -205,7 +206,7 @@ button {
   width: 100%;
   height: var(--world-height);
   overflow: hidden;
-  background: linear-gradient(180deg, #d99c55, #4e8a83 54%, #245e3f);
+  background: #1a130d;
 }
 
 .map-world::before,
@@ -229,6 +230,7 @@ button {
   box-shadow: inset 0 0 0 4px rgba(255, 225, 163, 0.7), inset 0 0 45px rgba(0, 0, 0, 0.55);
 }
 
+.art-stack,
 .map-layer,
 .effects-canvas,
 .route-svg,
@@ -236,6 +238,32 @@ button {
 .explorer,
 .ambient {
   position: absolute;
+}
+
+.art-stack {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.art-slice {
+  display: block;
+  width: 100%;
+  height: calc(var(--slice-height) + 72px);
+  margin-bottom: -72px;
+  object-fit: cover;
+  object-position: center center;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+}
+
+.art-slice:last-child {
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .map-layer {
@@ -246,24 +274,6 @@ button {
   object-fit: cover;
   pointer-events: none;
   user-select: none;
-}
-
-.map-base {
-  z-index: 1;
-  filter: saturate(1.12) contrast(1.04);
-}
-
-.map-mid {
-  z-index: 7;
-  opacity: 0.92;
-  animation: parallaxFloat 9s ease-in-out infinite alternate;
-}
-
-.map-foreground {
-  z-index: 34;
-  opacity: 0.96;
-  pointer-events: none;
-  animation: leafSway 7s ease-in-out infinite alternate;
 }
 
 .effects-canvas {
@@ -279,6 +289,7 @@ button {
   width: 100%;
   height: 100%;
   transform: translateY(120px);
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -304,7 +315,7 @@ button {
 }
 
 .route-glow {
-  stroke: rgba(119, 219, 104, 0.74);
+  stroke: rgba(119, 219, 104, 0.2);
   stroke-width: 7;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
@@ -527,15 +538,16 @@ button {
   width: 170px;
   height: 46px;
   border-radius: 999px;
-  background: rgba(255, 246, 220, 0.64);
+  background: rgba(255, 246, 220, 0.34);
   filter: blur(0.2px);
-  box-shadow: 44px -15px 0 8px rgba(255, 246, 220, 0.52), 86px 2px 0 -1px rgba(255, 246, 220, 0.55);
+  box-shadow: 44px -15px 0 8px rgba(255, 246, 220, 0.28), 86px 2px 0 -1px rgba(255, 246, 220, 0.3);
   animation: drift 20s ease-in-out infinite alternate;
 }
 
 .cloud-a {
-  left: 12%;
-  top: 150px;
+  left: 5%;
+  top: 104px;
+  scale: 0.74;
 }
 
 .cloud-b {

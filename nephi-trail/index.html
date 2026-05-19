@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#2c2119">
     <title>1 Nephi Journey</title>
     <meta name="description" content="A cinematic reading map for 1 Nephi in the Book of Mormon.">
-    <link rel="preload" href="assets/map-painterly.png" as="image">
+    <link rel="preload" href="assets/map-jerusalem.png" as="image">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -42,9 +42,12 @@
       <section class="map-frame" aria-label="Journey map">
         <div class="map-scroll" id="mapScroll">
           <div class="map-world" id="mapWorld">
-            <img class="map-layer map-base" src="assets/map-painterly.png" alt="" loading="eager" decoding="async">
-            <img class="map-layer map-mid" src="assets/map-mid.svg" alt="" loading="lazy" decoding="async">
-            <img class="map-layer map-foreground" src="assets/map-foreground.svg" alt="" loading="lazy" decoding="async">
+            <div class="art-stack" aria-hidden="true">
+              <img class="art-slice" src="assets/map-jerusalem.png" alt="" loading="eager" decoding="async">
+              <img class="art-slice" src="assets/map-wilderness.png" alt="" loading="lazy" decoding="async">
+              <img class="art-slice" src="assets/map-coast.png" alt="" loading="lazy" decoding="async">
+              <img class="art-slice" src="assets/map-jungle.png" alt="" loading="lazy" decoding="async">
+            </div>
 
             <canvas class="effects-canvas" id="effectsCanvas" aria-hidden="true"></canvas>
 

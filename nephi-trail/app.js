@@ -1,26 +1,26 @@
 const chapters = [
-  { chapter: 1, label: "1 Nephi 1", biome: "jerusalem", x: 24, y: 190 },
-  { chapter: 2, label: "1 Nephi 2", biome: "jerusalem", x: 42, y: 285 },
-  { chapter: 3, label: "1 Nephi 3", biome: "jerusalem", x: 62, y: 338 },
-  { chapter: 4, label: "1 Nephi 4", biome: "jerusalem", x: 72, y: 405 },
-  { chapter: 5, label: "1 Nephi 5", biome: "wilderness", x: 63, y: 548 },
-  { chapter: 6, label: "1 Nephi 6", biome: "wilderness", x: 39, y: 610 },
-  { chapter: 7, label: "1 Nephi 7", biome: "wilderness", x: 25, y: 680 },
-  { chapter: 8, label: "1 Nephi 8", biome: "wilderness", x: 38, y: 815 },
-  { chapter: 9, label: "1 Nephi 9", biome: "wilderness", x: 60, y: 890 },
-  { chapter: 10, label: "1 Nephi 10", biome: "wilderness", x: 75, y: 1000 },
-  { chapter: 11, label: "1 Nephi 11", biome: "coast", x: 66, y: 1145 },
-  { chapter: 12, label: "1 Nephi 12", biome: "coast", x: 44, y: 1245 },
-  { chapter: 13, label: "1 Nephi 13", biome: "coast", x: 33, y: 1350 },
-  { chapter: 14, label: "1 Nephi 14", biome: "coast", x: 47, y: 1495 },
-  { chapter: 15, label: "1 Nephi 15", biome: "coast", x: 65, y: 1600 },
-  { chapter: 16, label: "1 Nephi 16", biome: "coast", x: 70, y: 1680 },
-  { chapter: 17, label: "1 Nephi 17", biome: "coast", x: 48, y: 1845 },
-  { chapter: 18, label: "1 Nephi 18", biome: "transition", x: 29, y: 2040 },
-  { chapter: 19, label: "1 Nephi 19", biome: "jungle", x: 43, y: 2265 },
-  { chapter: 20, label: "1 Nephi 20", biome: "jungle", x: 68, y: 2420 },
-  { chapter: 21, label: "1 Nephi 21", biome: "jungle", x: 45, y: 2740 },
-  { chapter: 22, label: "1 Nephi 22", biome: "jungle", x: 76, y: 3150 },
+  { chapter: 1, label: "1 Nephi 1", biome: "jerusalem", x: 23, y: 285 },
+  { chapter: 2, label: "1 Nephi 2", biome: "jerusalem", x: 42, y: 395 },
+  { chapter: 3, label: "1 Nephi 3", biome: "jerusalem", x: 61, y: 500 },
+  { chapter: 4, label: "1 Nephi 4", biome: "jerusalem", x: 73, y: 635 },
+  { chapter: 5, label: "1 Nephi 5", biome: "wilderness", x: 67, y: 1000 },
+  { chapter: 6, label: "1 Nephi 6", biome: "wilderness", x: 45, y: 1105 },
+  { chapter: 7, label: "1 Nephi 7", biome: "wilderness", x: 28, y: 1218 },
+  { chapter: 8, label: "1 Nephi 8", biome: "wilderness", x: 37, y: 1350 },
+  { chapter: 9, label: "1 Nephi 9", biome: "wilderness", x: 58, y: 1480 },
+  { chapter: 10, label: "1 Nephi 10", biome: "wilderness", x: 75, y: 1610 },
+  { chapter: 11, label: "1 Nephi 11", biome: "coast", x: 70, y: 1905 },
+  { chapter: 12, label: "1 Nephi 12", biome: "coast", x: 48, y: 1995 },
+  { chapter: 13, label: "1 Nephi 13", biome: "coast", x: 31, y: 2105 },
+  { chapter: 14, label: "1 Nephi 14", biome: "coast", x: 39, y: 2235 },
+  { chapter: 15, label: "1 Nephi 15", biome: "coast", x: 60, y: 2350 },
+  { chapter: 16, label: "1 Nephi 16", biome: "coast", x: 74, y: 2465 },
+  { chapter: 17, label: "1 Nephi 17", biome: "coast", x: 50, y: 2585 },
+  { chapter: 18, label: "1 Nephi 18", biome: "transition", x: 25, y: 2880 },
+  { chapter: 19, label: "1 Nephi 19", biome: "jungle", x: 43, y: 3020 },
+  { chapter: 20, label: "1 Nephi 20", biome: "jungle", x: 67, y: 3150 },
+  { chapter: 21, label: "1 Nephi 21", biome: "jungle", x: 48, y: 3310 },
+  { chapter: 22, label: "1 Nephi 22", biome: "jungle", x: 75, y: 3460 },
 ];
 
 const storageKey = "nephi-journey-current-chapter";
@@ -38,7 +38,7 @@ const resetButton = document.querySelector("#resetButton");
 const routeGlow = document.querySelector("#routeGlow");
 const effectsCanvas = document.querySelector("#effectsCanvas");
 const effectsContext = effectsCanvas.getContext("2d");
-const visualYOffset = 120;
+const visualYOffset = 0;
 
 let currentIndex = readSavedIndex();
 let particles = [];
