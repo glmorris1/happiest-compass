@@ -3,7 +3,7 @@
 }
 
 .editor-shell {
-  width: min(100vw, 860px);
+  width: min(100vw, 520px);
 }
 
 .editor-toolbar {
@@ -71,7 +71,7 @@
 }
 
 .editor-frame {
-  inset: 0 0 190px;
+  inset: 0;
 }
 
 .editor-grid {
@@ -164,23 +164,4 @@
   color: #1f150d;
   background: rgba(255, 246, 223, 0.94);
   font: 0.72rem/1.35 Consolas, "Courier New", monospace;
-}
-
-@media (min-width: 900px) {
-  .editor-shell {
-    width: min(100vw, 1040px);
-  }
-
-  .editor-frame {
-    right: 310px;
-    bottom: 0;
-  }
-
-  .editor-panel {
-    left: auto;
-    top: calc(max(10px, env(safe-area-inset-top)) + 76px);
-    right: 10px;
-    bottom: auto;
-    width: 290px;
-  }
 }
