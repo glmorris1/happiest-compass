@@ -1,4 +1,4 @@
-const defaultChapters = window.NEPHI_CHAPTERS.map((chapter) => ({ ...chapter }));
+let defaultChapters = [];
 
 const draftKey = "nephi-node-editor-draft";
 const nodesContainer = document.querySelector("#nodes");
@@ -15,7 +15,7 @@ const saveDraftButton = document.querySelector("#saveDraftButton");
 const loadDraftButton = document.querySelector("#loadDraftButton");
 const resetButton = document.querySelector("#resetButton");
 
-let chapters = cloneChapters(defaultChapters);
+let chapters = [];
 let selectedIndex = 0;
 let dragState = null;
 
@@ -23,26 +23,31 @@ function cloneChapters(source) {
   return source.map((item) => ({ ...item }));
 }
 
-function markerSvg(chapter) {
+async function loadChapters() {
+  try {
+    const response = await fetch(`nodes.json?v=continuous-map-1`, { cache: "no-cache" });
+    if (!response.ok) throw new Error("Node layout unavailable.");
+    const data = await response.json();
+    if (!Array.isArray(data) || data.length !== 22) throw new Error("Node layout must contain 22 chapters.");
+    return data.map(normalizeChapter);
+  } catch {
+    return window.NEPHI_CHAPTERS.map(normalizeChapter);
+  }
+}
+
+function normalizeChapter(chapter) {
+  return {
+    ...chapter,
+    label: chapter.label || `1 Nephi ${chapter.chapter}`,
+    x: Number(chapter.x),
+    y: Number(chapter.y),
+  };
+}
+
+function markerMarkup(chapter) {
   return `
-    <svg class="marker-svg" viewBox="0 0 92 92" aria-hidden="true">
-      <defs>
-        <radialGradient id="editor-stone-${chapter}" cx="35%" cy="25%" r="72%">
-          <stop offset="0%" stop-color="#fff0ba"></stop>
-          <stop offset="43%" stop-color="#c9b18a"></stop>
-          <stop offset="100%" stop-color="#6f6251"></stop>
-        </radialGradient>
-        <linearGradient id="editor-gold-${chapter}" x1="20%" x2="80%" y1="0%" y2="100%">
-          <stop offset="0%" stop-color="#fff1a8"></stop>
-          <stop offset="48%" stop-color="#d79b34"></stop>
-          <stop offset="100%" stop-color="#7f4c1c"></stop>
-        </linearGradient>
-      </defs>
-      <ellipse class="marker-ground" cx="46" cy="76" rx="34" ry="10"></ellipse>
-      <circle class="marker-rim" cx="46" cy="43" r="34" fill="url(#editor-gold-${chapter})"></circle>
-      <circle class="marker-face" cx="46" cy="41" r="26" fill="url(#editor-stone-${chapter})"></circle>
-      <path class="marker-chip" d="M30 31c7-8 19-11 30-5"></path>
-    </svg>
+    <img class="node-state node-unlocked" src="assets/node-assets/unlocked.webp" alt="" loading="lazy" decoding="async">
+    <img class="node-state node-current" src="assets/node-assets/current.webp" alt="" loading="lazy" decoding="async">
     <span class="marker-number">${chapter}</span>
   `;
 }
@@ -55,7 +60,7 @@ function renderNodes() {
     node.type = "button";
     node.className = `chapter-node editor-node biome-${item.biome}`;
     node.dataset.index = String(index);
-    node.innerHTML = markerSvg(item.chapter);
+    node.innerHTML = markerMarkup(item.chapter);
     node.setAttribute("aria-label", `Drag ${item.label}`);
     node.addEventListener("pointerdown", startDrag);
     node.addEventListener("click", () => selectNode(index));
@@ -68,7 +73,7 @@ function renderNodes() {
 function updateNodes() {
   document.querySelectorAll(".editor-node").forEach((node, index) => {
     const point = chapters[index];
-    node.style.left = `${point.x}%`;
+    node.style.left = `${point.x}px`;
     node.style.top = `${point.y}px`;
     node.dataset.coords = `${formatX(point.x)}, ${Math.round(point.y)}`;
     node.classList.toggle("is-selected", index === selectedIndex);
@@ -80,7 +85,7 @@ function updateNodes() {
 }
 
 function formatX(value) {
-  return `${Number(value.toFixed(1))}%`;
+  return `${Math.round(value)}px`;
 }
 
 function startDrag(event) {
@@ -97,13 +102,13 @@ function moveDrag(event) {
   if (!dragState || dragState.pointerId !== event.pointerId) return;
 
   const rect = mapWorld.getBoundingClientRect();
-  const rawX = ((event.clientX - rect.left) / rect.width) * 100;
+  const rawX = event.clientX - rect.left;
   const rawY = event.clientY - rect.top;
   const snap = snapToggle.checked;
-  const nextX = clamp(snap ? Math.round(rawX / 2) * 2 : rawX, 5, 95);
+  const nextX = clamp(snap ? Math.round(rawX / 10) * 10 : rawX, 36, rect.width - 36);
   const nextY = clamp(snap ? Math.round(rawY / 10) * 10 : rawY, 80, rect.height - 80);
 
-  chapters[dragState.index].x = Number(nextX.toFixed(1));
+  chapters[dragState.index].x = Math.round(nextX);
   chapters[dragState.index].y = Math.round(nextY);
   updateNodes();
 }
@@ -129,7 +134,7 @@ function exportLayout() {
     chapter,
     label,
     biome,
-    x: Number(x.toFixed(1)),
+    x: Math.round(x),
     y: Math.round(y),
   }));
 
@@ -147,8 +152,8 @@ function importLayout() {
       const incoming = parsed.find((item) => Number(item.chapter) === fallback.chapter) || parsed[index];
       return {
         ...fallback,
-        x: clamp(Number(incoming.x), 5, 95),
-        y: clamp(Math.round(Number(incoming.y)), 80, 3600),
+        x: normalizeIncomingX(incoming.x),
+        y: clamp(Math.round(Number(incoming.y)), 80, mapWorld.clientHeight - 80),
       };
     });
 
@@ -158,6 +163,12 @@ function importLayout() {
   } catch (error) {
     layoutOutput.value = `${layoutOutput.value}\n\nImport error: ${error.message}`;
   }
+}
+
+function normalizeIncomingX(value) {
+  const numeric = Number(value);
+  if (numeric <= 100) return clamp(Math.round((numeric / 100) * mapWorld.clientWidth), 36, mapWorld.clientWidth - 36);
+  return clamp(Math.round(numeric), 36, mapWorld.clientWidth - 36);
 }
 
 async function copyLayout() {
@@ -208,5 +219,11 @@ saveDraftButton.addEventListener("click", saveDraft);
 loadDraftButton.addEventListener("click", loadDraft);
 resetButton.addEventListener("click", resetLayout);
 
-renderNodes();
-exportLayout();
+async function init() {
+  defaultChapters = await loadChapters();
+  chapters = cloneChapters(defaultChapters);
+  renderNodes();
+  exportLayout();
+}
+
+init();

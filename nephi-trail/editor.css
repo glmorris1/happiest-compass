@@ -118,6 +118,14 @@
   filter: drop-shadow(0 10px 8px rgba(34, 18, 8, 0.5)) drop-shadow(0 0 18px rgba(255, 234, 104, 0.95));
 }
 
+.editor-node.is-selected .node-state {
+  opacity: 0;
+}
+
+.editor-node.is-selected .node-current {
+  opacity: 1;
+}
+
 .editor-panel {
   position: absolute;
   left: 10px;
