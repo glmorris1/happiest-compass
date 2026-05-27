@@ -31,7 +31,7 @@ function saveIndex() {
 
 async function loadChapters() {
   try {
-    const response = await fetch(`nodes.json?v=continuous-map-1`, { cache: "no-cache" });
+    const response = await fetch(`nodes.json?v=story-map-1`, { cache: "no-cache" });
     if (!response.ok) throw new Error("Node layout unavailable.");
     const data = await response.json();
     if (!Array.isArray(data) || data.length !== 22) throw new Error("Node layout must contain 22 chapters.");
