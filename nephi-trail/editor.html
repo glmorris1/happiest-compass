@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2c2119">
+    <title>1 Nephi Map Editor</title>
+    <meta name="description" content="Drag chapter nodes into place for the 1 Nephi journey map.">
+    <link rel="preload" href="assets/map-jerusalem.png" as="image">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="editor.css">
+  </head>
+  <body class="editor-body">
+    <main class="app-shell editor-shell">
+      <header class="editor-toolbar" aria-label="Map editor tools">
+        <div>
+          <span>Layout Editor</span>
+          <h1>1 Nephi Nodes</h1>
+        </div>
+        <label class="snap-toggle">
+          <input id="snapToggle" type="checkbox">
+          <span>Snap</span>
+        </label>
+        <button class="editor-button" id="exportButton" type="button">Export</button>
+      </header>
+
+      <section class="map-frame editor-frame" aria-label="Editable journey map">
+        <div class="map-scroll editor-scroll" id="mapScroll">
+          <div class="map-world editor-world" id="mapWorld">
+            <div class="art-stack" aria-hidden="true">
+              <img class="art-slice" src="assets/map-jerusalem.png" alt="" loading="eager" decoding="async">
+              <img class="art-slice" src="assets/map-wilderness.png" alt="" loading="lazy" decoding="async">
+              <img class="art-slice" src="assets/map-coast.png" alt="" loading="lazy" decoding="async">
+              <img class="art-slice" src="assets/map-jungle.png" alt="" loading="lazy" decoding="async">
+            </div>
+
+            <div class="editor-grid" aria-hidden="true"></div>
+            <div class="nodes editor-nodes" id="nodes"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="editor-panel" aria-label="Node layout data">
+        <div class="panel-row">
+          <strong id="selectedLabel">Chapter 1</strong>
+          <span id="positionLabel">x 23%, y 285</span>
+        </div>
+        <div class="panel-actions">
+          <button class="editor-button" id="saveDraftButton" type="button">Save Draft</button>
+          <button class="editor-button" id="loadDraftButton" type="button">Load Draft</button>
+          <button class="editor-button" id="resetButton" type="button">Reset</button>
+        </div>
+        <textarea id="layoutOutput" spellcheck="false" aria-label="Exported chapter node layout"></textarea>
+        <div class="panel-actions">
+          <button class="editor-button primary" id="copyButton" type="button">Copy JSON</button>
+          <button class="editor-button" id="importButton" type="button">Import JSON</button>
+        </div>
+      </aside>
+    </main>
+
+    <script src="editor.js"></script>
+  </body>
+</html>

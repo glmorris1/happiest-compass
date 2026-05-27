@@ -1,0 +1,186 @@
+.editor-body {
+  overflow: auto;
+}
+
+.editor-shell {
+  width: min(100vw, 860px);
+}
+
+.editor-toolbar {
+  position: absolute;
+  inset: max(10px, env(safe-area-inset-top)) 10px auto;
+  z-index: 80;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 9px 10px;
+  border: 2px solid rgba(84, 53, 25, 0.65);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 238, 198, 0.98), rgba(221, 174, 103, 0.96));
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25), inset 0 0 0 2px rgba(255, 255, 255, 0.32);
+}
+
+.editor-toolbar span {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.editor-toolbar h1 {
+  margin: 2px 0 0;
+  font-size: 1.1rem;
+}
+
+.snap-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.snap-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #d59835;
+}
+
+.editor-button {
+  min-height: 38px;
+  padding: 0 10px;
+  border: 2px solid rgba(82, 51, 24, 0.56);
+  border-radius: 8px;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fff0c7, #d9aa62);
+  box-shadow: 0 3px 0 #8a6031, inset 0 1px 0 rgba(255, 255, 255, 0.56);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 950;
+}
+
+.editor-button.primary {
+  background: linear-gradient(180deg, #fff1a7, #e0a23c);
+}
+
+.editor-button:active {
+  translate: 0 2px;
+  box-shadow: 0 1px 0 #8a6031;
+}
+
+.editor-frame {
+  inset: 0 0 190px;
+}
+
+.editor-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 10% 100px;
+  opacity: 0.28;
+}
+
+.editor-nodes {
+  z-index: 45;
+}
+
+.editor-node {
+  touch-action: none;
+}
+
+.editor-node::after {
+  content: attr(data-coords);
+  position: absolute;
+  left: 50%;
+  top: calc(100% - 2px);
+  translate: -50% 0;
+  min-width: 74px;
+  padding: 3px 5px;
+  border: 1px solid rgba(49, 29, 14, 0.52);
+  border-radius: 999px;
+  color: #24170d;
+  background: rgba(255, 238, 190, 0.9);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.editor-node.is-selected {
+  scale: 1.14;
+  filter: drop-shadow(0 10px 8px rgba(34, 18, 8, 0.5)) drop-shadow(0 0 18px rgba(255, 234, 104, 0.95));
+}
+
+.editor-panel {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 82;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 2px solid rgba(80, 51, 26, 0.62);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 235, 191, 0.97), rgba(209, 159, 87, 0.96));
+  box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.24), inset 0 0 0 2px rgba(255, 255, 255, 0.26);
+}
+
+.panel-row,
+.panel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.panel-row span {
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.panel-actions {
+  justify-content: stretch;
+}
+
+.panel-actions .editor-button {
+  flex: 1;
+}
+
+#layoutOutput {
+  width: 100%;
+  height: 72px;
+  resize: vertical;
+  padding: 8px;
+  border: 2px solid rgba(82, 51, 24, 0.38);
+  border-radius: 8px;
+  color: #1f150d;
+  background: rgba(255, 246, 223, 0.94);
+  font: 0.72rem/1.35 Consolas, "Courier New", monospace;
+}
+
+@media (min-width: 900px) {
+  .editor-shell {
+    width: min(100vw, 1040px);
+  }
+
+  .editor-frame {
+    right: 310px;
+    bottom: 0;
+  }
+
+  .editor-panel {
+    left: auto;
+    top: calc(max(10px, env(safe-area-inset-top)) + 76px);
+    right: 10px;
+    bottom: auto;
+    width: 290px;
+  }
+}
