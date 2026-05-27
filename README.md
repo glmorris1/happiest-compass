@@ -7,6 +7,7 @@ A static mobile web app. It asks for GPS and device-orientation access, then poi
 - Happiest Compass: `https://glmorris1.github.io/happiest-compass/`
 - Lanikai Beach Compass: `https://glmorris1.github.io/happiest-compass/lanikai-beach/`
 - Perry High School Compass: `https://glmorris1.github.io/happiest-compass/perry-high-school/`
+- Pirate Treasure Compass: `https://glmorris1.github.io/happiest-compass/pirate-treasure/`
 
 ## Run locally
 
@@ -27,7 +28,7 @@ This repository includes a GitHub Actions workflow at `.github/workflows/pages.y
 3. Under Build and deployment, choose GitHub Actions.
 4. Push to `main` or run the workflow manually.
 
-The main app will publish at `https://glmorris1.github.io/happiest-compass/`, the Lanikai Beach page will publish at `https://glmorris1.github.io/happiest-compass/lanikai-beach/`, and the Perry High School page will publish at `https://glmorris1.github.io/happiest-compass/perry-high-school/`.
+The main app will publish at `https://glmorris1.github.io/happiest-compass/`, the Lanikai Beach page will publish at `https://glmorris1.github.io/happiest-compass/lanikai-beach/`, the Perry High School page will publish at `https://glmorris1.github.io/happiest-compass/perry-high-school/`, and the Pirate Treasure page will publish at `https://glmorris1.github.io/happiest-compass/pirate-treasure/`.
 
 ## Adjust the location
 

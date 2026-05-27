@@ -1,0 +1,9 @@
+{
+  "name": "Pirate Treasure Compass",
+  "short_name": "Treasure",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#22160f",
+  "theme_color": "#22160f",
+  "icons": []
+}
