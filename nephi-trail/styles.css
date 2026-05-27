@@ -454,6 +454,14 @@ button {
   overflow: visible;
 }
 
+.explorer-sprite {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
+  filter: drop-shadow(0 10px 6px rgba(25, 16, 9, 0.34));
+}
+
 .explorer-shadow {
   fill: rgba(30, 18, 9, 0.34);
 }
