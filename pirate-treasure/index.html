@@ -13,11 +13,27 @@
   </head>
   <body>
     <main class="app-shell">
+      <header class="top-chrome" aria-hidden="true">
+        <div class="time">9:41</div>
+        <button class="icon-button menu-button" type="button" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <button class="icon-button gear-button" type="button" aria-label="Settings">
+          <span></span>
+        </button>
+      </header>
+
       <section class="status-panel" aria-live="polite">
-        <h1 id="targetName">Pirate Treasure Compass</h1>
+        <p class="connected">Connected to</p>
+        <h1 id="targetName">The Treasure</h1>
+        <p class="summary-distance" id="summaryDistance">Awaiting location</p>
       </section>
 
       <section class="compass-card" aria-label="Compass">
+        <div class="pocket-loop" aria-hidden="true"></div>
+        <div class="pocket-crown" aria-hidden="true"></div>
         <div class="compass" id="compass">
           <div class="ornate-bezel" aria-hidden="true"></div>
           <div class="rose" aria-hidden="true">
@@ -34,6 +50,10 @@
           <div class="cardinal east" aria-hidden="true">E</div>
           <div class="cardinal south" aria-hidden="true">S</div>
           <div class="cardinal west" aria-hidden="true">W</div>
+          <div class="ordinal ne" aria-hidden="true">NE</div>
+          <div class="ordinal se" aria-hidden="true">SE</div>
+          <div class="ordinal sw" aria-hidden="true">SW</div>
+          <div class="ordinal nw" aria-hidden="true">NW</div>
           <div class="tick tick-0"></div>
           <div class="tick tick-30"></div>
           <div class="tick tick-60"></div>
@@ -47,15 +67,34 @@
         </div>
       </section>
 
-      <section class="distance-panel">
-        <p class="eyebrow">Distance to treasure</p>
+      <section class="direction-panel">
+        <p class="eyebrow">The treasure lies this way</p>
+        <div class="direction-value" id="directionValue">--</div>
+        <div class="degree-value" id="degreeValue">--</div>
         <div class="distance is-waiting" id="distanceValue">Waiting for location</div>
       </section>
 
       <button class="start-button" id="startButton" type="button">Start compass</button>
-      <p class="helper" id="helperText">
-        Works best outdoors on HTTPS. GitHub Pages provides HTTPS automatically after deploy.
-      </p>
+      <p class="helper" id="helperText">Works best outdoors on HTTPS.</p>
+
+      <nav class="bottom-nav" aria-label="App sections">
+        <a class="nav-item is-active" href="./" aria-current="page">
+          <span class="nav-icon compass-icon" aria-hidden="true"></span>
+          Compass
+        </a>
+        <span class="nav-item">
+          <span class="nav-icon clue-icon" aria-hidden="true"></span>
+          Clues
+        </span>
+        <span class="nav-item">
+          <span class="nav-icon chest-icon" aria-hidden="true"></span>
+          Treasure
+        </span>
+        <span class="nav-item">
+          <span class="nav-icon gear-small" aria-hidden="true"></span>
+          Settings
+        </span>
+      </nav>
     </main>
 
     <script src="app.js"></script>
