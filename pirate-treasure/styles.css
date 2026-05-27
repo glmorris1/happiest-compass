@@ -3,7 +3,10 @@
   --ink: #f8ead0;
   --muted: #d0b98f;
   --mahogany: #2d1710;
+  --mahogany-deep: #160a06;
   --brass: #d8a73b;
+  --brass-bright: #ffe19b;
+  --brass-dark: #71501e;
   --ruby: #9e2732;
   --panel: rgba(36, 22, 15, 0.76);
   --line: rgba(248, 234, 208, 0.22);
@@ -17,10 +20,10 @@ body {
   font-family: Georgia, "Times New Roman", serif;
   color: var(--ink);
   background:
-    linear-gradient(180deg, rgba(25, 13, 8, 0.34), rgba(25, 13, 8, 0.88)),
-    radial-gradient(circle at 50% 18%, rgba(230, 181, 88, 0.24), transparent 34%),
+    linear-gradient(180deg, rgba(25, 13, 8, 0.24), rgba(25, 13, 8, 0.9)),
+    radial-gradient(circle at 50% 12%, rgba(255, 214, 128, 0.28), transparent 32%),
     repeating-linear-gradient(28deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 15px),
-    linear-gradient(135deg, #5d3d23, #1c100b 72%);
+    linear-gradient(135deg, #704923, #1c100b 72%);
 }
 
 body::before {
@@ -79,7 +82,8 @@ h1 {
   min-height: 0;
   display: grid;
   place-items: center;
-  padding: 8px 0;
+  padding: 12px 0;
+  perspective: 1000px;
 }
 
 .compass {
@@ -87,58 +91,119 @@ h1 {
   width: min(84vw, 390px);
   aspect-ratio: 1;
   border-radius: 50%;
+  isolation: isolate;
   background:
-    radial-gradient(circle, rgba(54, 31, 18, 0.9) 0 5px, transparent 6px),
-    conic-gradient(from 0deg, rgba(99, 61, 30, 0.32), rgba(235, 196, 111, 0.18), rgba(99, 61, 30, 0.32), rgba(235, 196, 111, 0.18), rgba(99, 61, 30, 0.32)),
-    radial-gradient(circle, #d8bd86 0 43%, #a87b48 44% 58%, #3b2114 59% 100%);
-  border: 3px solid #2a170f;
+    radial-gradient(circle at 50% 45%, rgba(58, 32, 15, 0.22) 0 8px, transparent 9px),
+    repeating-conic-gradient(from -1deg, rgba(75, 43, 18, 0.6) 0 1.5deg, transparent 1.5deg 7.5deg),
+    conic-gradient(from 0deg, rgba(112, 72, 28, 0.5), rgba(255, 218, 140, 0.34), rgba(112, 72, 28, 0.5), rgba(255, 218, 140, 0.34), rgba(112, 72, 28, 0.5)),
+    radial-gradient(circle, #e7ca8c 0 40%, #b28348 41% 56%, #3b2114 57% 69%, #140905 70% 100%);
+  border: 4px solid #120705;
+  transform: rotateX(5deg);
   box-shadow:
-    inset 0 0 0 10px rgba(248, 234, 208, 0.12),
-    inset 0 0 0 20px rgba(62, 35, 18, 0.36),
-    inset 0 0 70px rgba(46, 24, 12, 0.62),
-    0 24px 72px rgba(0, 0, 0, 0.5);
+    inset 0 0 0 9px rgba(255, 232, 167, 0.24),
+    inset 0 0 0 18px rgba(66, 36, 20, 0.7),
+    inset 0 0 0 26px rgba(239, 190, 82, 0.14),
+    inset 0 0 82px rgba(46, 24, 12, 0.7),
+    0 6px 0 #0d0503,
+    0 30px 76px rgba(0, 0, 0, 0.58);
 }
 
 .compass::before {
   position: absolute;
-  inset: 18%;
+  inset: 15%;
   border-radius: 50%;
-  border: 1px solid rgba(60, 34, 17, 0.48);
+  border: 1px solid rgba(60, 34, 17, 0.58);
+  background:
+    linear-gradient(90deg, transparent 49.5%, rgba(67, 39, 19, 0.32) 49.5% 50.5%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, rgba(67, 39, 19, 0.32) 49.5% 50.5%, transparent 50.5%),
+    radial-gradient(circle, transparent 0 61%, rgba(74, 42, 19, 0.28) 62% 63%, transparent 64%);
   content: "";
 }
 
 .compass::after {
   position: absolute;
-  inset: 35%;
+  inset: 31%;
   border-radius: 50%;
-  border: 1px solid rgba(60, 34, 17, 0.42);
+  border: 2px solid rgba(85, 49, 20, 0.42);
+  background:
+    radial-gradient(circle, transparent 0 61%, rgba(255, 230, 161, 0.14) 62%, transparent 65%),
+    conic-gradient(from 45deg, transparent 0 22deg, rgba(120, 76, 26, 0.18) 22deg 23deg, transparent 23deg 45deg);
   content: "";
 }
 
+.ornate-bezel {
+  position: absolute;
+  inset: -3%;
+  z-index: -1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 8%, var(--brass-bright) 0 2.6%, transparent 2.8%),
+    radial-gradient(circle at 92% 50%, var(--brass-bright) 0 2.6%, transparent 2.8%),
+    radial-gradient(circle at 50% 92%, var(--brass-bright) 0 2.6%, transparent 2.8%),
+    radial-gradient(circle at 8% 50%, var(--brass-bright) 0 2.6%, transparent 2.8%),
+    repeating-conic-gradient(from 0deg, #2a140a 0 5deg, #d8a73b 5deg 8deg, #513115 8deg 13deg),
+    radial-gradient(circle, #f4cd73 0 62%, #6e431c 63% 72%, #140806 73% 100%);
+  box-shadow:
+    inset 0 0 0 9px rgba(255, 231, 157, 0.28),
+    inset 0 0 34px rgba(35, 17, 8, 0.78),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.rose {
+  position: absolute;
+  inset: 22%;
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0.86;
+  filter: drop-shadow(0 2px 1px rgba(255, 238, 178, 0.18));
+}
+
+.rose-point {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 16px;
+  height: 47%;
+  transform-origin: 50% 100%;
+  clip-path: polygon(50% 0, 100% 100%, 50% 78%, 0 100%);
+  background: linear-gradient(180deg, rgba(87, 49, 18, 0.74), rgba(209, 157, 63, 0.16));
+}
+
+.rose-n { transform: translate(-50%, -100%) rotate(0deg); height: 52%; background: linear-gradient(180deg, rgba(139, 30, 38, 0.78), rgba(87, 49, 18, 0.18)); }
+.rose-e { transform: translate(-50%, -100%) rotate(90deg); height: 52%; }
+.rose-s { transform: translate(-50%, -100%) rotate(180deg); height: 52%; }
+.rose-w { transform: translate(-50%, -100%) rotate(270deg); height: 52%; }
+.rose-ne { transform: translate(-50%, -100%) rotate(45deg); width: 10px; height: 39%; }
+.rose-se { transform: translate(-50%, -100%) rotate(135deg); width: 10px; height: 39%; }
+.rose-sw { transform: translate(-50%, -100%) rotate(225deg); width: 10px; height: 39%; }
+.rose-nw { transform: translate(-50%, -100%) rotate(315deg); width: 10px; height: 39%; }
+
 .cardinal {
   position: absolute;
-  z-index: 1;
+  z-index: 4;
   width: 38px;
   height: 38px;
   display: grid;
   place-items: center;
-  color: #412513;
-  font-size: 1.45rem;
+  color: #3a1f0e;
+  font-size: 1.55rem;
   font-weight: 900;
   line-height: 1;
-  text-shadow: 0 1px rgba(255, 235, 185, 0.45);
+  text-shadow:
+    0 1px rgba(255, 235, 185, 0.62),
+    0 0 8px rgba(255, 231, 161, 0.18);
 }
 
-.north { top: 6%; left: 50%; transform: translateX(-50%); color: var(--ruby); }
-.east { top: 50%; right: 6%; transform: translateY(-50%); }
-.south { bottom: 6%; left: 50%; transform: translateX(-50%); }
-.west { top: 50%; left: 6%; transform: translateY(-50%); }
+.north { top: 7%; left: 50%; transform: translateX(-50%); color: var(--ruby); }
+.east { top: 50%; right: 7%; transform: translateY(-50%); }
+.south { bottom: 7%; left: 50%; transform: translateX(-50%); }
+.west { top: 50%; left: 7%; transform: translateY(-50%); }
 
 .tick {
   position: absolute;
-  inset: 18px;
+  inset: 23px;
+  z-index: 3;
   border-radius: 50%;
-  border-top: 3px solid rgba(63, 37, 18, 0.42);
+  border-top: 4px solid rgba(69, 39, 17, 0.44);
 }
 
 .tick-0 { transform: rotate(0deg); }
@@ -150,35 +215,41 @@ h1 {
 
 .needle {
   position: absolute;
-  z-index: 2;
+  z-index: 5;
   inset: 50% auto auto 50%;
-  width: 22px;
-  height: 43%;
+  width: 30px;
+  height: 45%;
   transform: translate(-50%, -100%) rotate(0deg);
   transform-origin: 50% 100%;
   transition: transform 220ms ease-out;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.48));
+  filter: drop-shadow(0 12px 13px rgba(0, 0, 0, 0.56));
 }
 
 .needle span {
   display: block;
   width: 100%;
   height: 100%;
-  clip-path: polygon(50% 0, 100% 100%, 50% 87%, 0 100%);
-  background: linear-gradient(180deg, #9e2732 0 46%, #f1d08a 47% 100%);
+  clip-path: polygon(50% 0, 72% 68%, 100% 100%, 50% 88%, 0 100%, 28% 68%);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.25), transparent 22% 78%, rgba(0, 0, 0, 0.18)),
+    linear-gradient(180deg, #a31f2d 0 45%, #43210d 46% 48%, #f0cc7a 49% 100%);
 }
 
 .center-dot {
   position: absolute;
-  z-index: 3;
+  z-index: 6;
   inset: 50% auto auto 50%;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: var(--brass);
-  border: 7px solid #422414;
-  box-shadow: 0 0 0 8px rgba(66, 36, 20, 0.2);
+  background:
+    radial-gradient(circle at 34% 28%, #fff1b7 0 12%, transparent 13%),
+    radial-gradient(circle, #f1c761 0 42%, #8b5c22 43% 100%);
+  border: 8px solid #351a0c;
+  box-shadow:
+    0 0 0 7px rgba(219, 166, 59, 0.28),
+    0 7px 14px rgba(0, 0, 0, 0.38);
 }
 
 .distance {
@@ -224,7 +295,7 @@ h1 {
 
 @media (max-height: 720px) {
   .app-shell { gap: 11px; }
-  .compass { width: min(72vw, 300px); }
+  .compass { width: min(72vw, 310px); }
   .status-panel,
   .distance-panel { padding: 13px; }
 }
