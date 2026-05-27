@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#2c2119">
     <title>1 Nephi Journey</title>
     <meta name="description" content="A cinematic reading map for 1 Nephi in the Book of Mormon.">
-    <link rel="preload" href="assets/map-jerusalem.png" as="image">
-    <link rel="stylesheet" href="styles.css?v=nephi-sprite-layout-2">
+    <link rel="preload" href="assets/long-map-1nephi.webp" as="image">
+    <link rel="stylesheet" href="styles.css?v=continuous-map-1">
   </head>
   <body>
     <main class="app-shell">
@@ -43,19 +43,10 @@
         <div class="map-scroll" id="mapScroll">
           <div class="map-world" id="mapWorld">
             <div class="art-stack" aria-hidden="true">
-              <img class="art-slice" src="assets/map-jerusalem.png" alt="" loading="eager" decoding="async">
-              <img class="art-slice" src="assets/map-wilderness.png" alt="" loading="lazy" decoding="async">
-              <img class="art-slice" src="assets/map-coast.png" alt="" loading="lazy" decoding="async">
-              <img class="art-slice" src="assets/map-jungle.png" alt="" loading="lazy" decoding="async">
+              <img class="long-map" src="assets/long-map-1nephi.webp" alt="" loading="eager" decoding="async">
             </div>
 
             <canvas class="effects-canvas" id="effectsCanvas" aria-hidden="true"></canvas>
-
-            <svg class="route-svg" viewBox="0 0 100 3300" preserveAspectRatio="none" aria-hidden="true">
-              <path class="route-shadow" d="M24 190 C36 278 62 300 72 405 C82 512 39 556 25 680 C9 827 60 872 75 1000 C92 1148 44 1228 33 1350 C20 1502 59 1550 70 1680 C85 1847 38 1900 29 2040 C20 2192 52 2276 68 2420 C85 2575 43 2633 33 2760 C21 2920 51 3022 76 3150"></path>
-              <path class="route-stones" d="M24 190 C36 278 62 300 72 405 C82 512 39 556 25 680 C9 827 60 872 75 1000 C92 1148 44 1228 33 1350 C20 1502 59 1550 70 1680 C85 1847 38 1900 29 2040 C20 2192 52 2276 68 2420 C85 2575 43 2633 33 2760 C21 2920 51 3022 76 3150"></path>
-              <path class="route-glow" id="routeGlow" pathLength="100" d="M24 190 C36 278 62 300 72 405 C82 512 39 556 25 680 C9 827 60 872 75 1000 C92 1148 44 1228 33 1350 C20 1502 59 1550 70 1680 C85 1847 38 1900 29 2040 C20 2192 52 2276 68 2420 C85 2575 43 2633 33 2760 C21 2920 51 3022 76 3150"></path>
-            </svg>
 
             <div class="ambient cloud cloud-a" aria-hidden="true"></div>
             <div class="ambient cloud cloud-b" aria-hidden="true"></div>
@@ -83,7 +74,7 @@
       </footer>
     </main>
 
-    <script src="layout.js?v=nephi-layout-3"></script>
-    <script src="app.js?v=nephi-layout-3"></script>
+    <script src="layout.js?v=continuous-map-1"></script>
+    <script src="app.js?v=continuous-map-1"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-const chapters = window.NEPHI_CHAPTERS.map((chapter) => ({ ...chapter }));
+let chapters = [];
 
 const storageKey = "nephi-journey-current-chapter";
 const nodesContainer = document.querySelector("#nodes");
@@ -12,7 +12,6 @@ const completedText = document.querySelector("#completedText");
 const nextButton = document.querySelector("#nextButton");
 const backButton = document.querySelector("#backButton");
 const resetButton = document.querySelector("#resetButton");
-const routeGlow = document.querySelector("#routeGlow");
 const effectsCanvas = document.querySelector("#effectsCanvas");
 const effectsContext = effectsCanvas.getContext("2d");
 const visualYOffset = 0;
@@ -30,27 +29,33 @@ function saveIndex() {
   localStorage.setItem(storageKey, String(currentIndex));
 }
 
-function markerSvg(chapter) {
+async function loadChapters() {
+  try {
+    const response = await fetch(`nodes.json?v=continuous-map-1`, { cache: "no-cache" });
+    if (!response.ok) throw new Error("Node layout unavailable.");
+    const data = await response.json();
+    if (!Array.isArray(data) || data.length !== 22) throw new Error("Node layout must contain 22 chapters.");
+    return data.map(normalizeChapter);
+  } catch {
+    return window.NEPHI_CHAPTERS.map(normalizeChapter);
+  }
+}
+
+function normalizeChapter(chapter) {
+  return {
+    ...chapter,
+    label: chapter.label || `1 Nephi ${chapter.chapter}`,
+    x: Number(chapter.x),
+    y: Number(chapter.y),
+  };
+}
+
+function markerMarkup(chapter) {
   return `
-    <svg class="marker-svg" viewBox="0 0 92 92" aria-hidden="true">
-      <defs>
-        <radialGradient id="stone-${chapter}" cx="35%" cy="25%" r="72%">
-          <stop offset="0%" stop-color="#fff0ba"></stop>
-          <stop offset="43%" stop-color="#c9b18a"></stop>
-          <stop offset="100%" stop-color="#6f6251"></stop>
-        </radialGradient>
-        <linearGradient id="gold-${chapter}" x1="20%" x2="80%" y1="0%" y2="100%">
-          <stop offset="0%" stop-color="#fff1a8"></stop>
-          <stop offset="48%" stop-color="#d79b34"></stop>
-          <stop offset="100%" stop-color="#7f4c1c"></stop>
-        </linearGradient>
-      </defs>
-      <ellipse class="marker-ground" cx="46" cy="76" rx="34" ry="10"></ellipse>
-      <circle class="marker-rim" cx="46" cy="43" r="34" fill="url(#gold-${chapter})"></circle>
-      <circle class="marker-face" cx="46" cy="41" r="26" fill="url(#stone-${chapter})"></circle>
-      <path class="marker-chip" d="M30 31c7-8 19-11 30-5"></path>
-      <path class="marker-check" d="M30 43l10 10 22-25"></path>
-    </svg>
+    <img class="node-state node-locked" src="assets/node-assets/locked.webp" alt="" loading="lazy" decoding="async">
+    <img class="node-state node-unlocked" src="assets/node-assets/unlocked.webp" alt="" loading="lazy" decoding="async">
+    <img class="node-state node-current" src="assets/node-assets/current.webp" alt="" loading="lazy" decoding="async">
+    <img class="node-state node-completed" src="assets/node-assets/completed.webp" alt="" loading="lazy" decoding="async">
     <span class="marker-number">${chapter}</span>
   `;
 }
@@ -63,10 +68,10 @@ function renderNodes() {
     node.type = "button";
     node.className = `chapter-node biome-${item.biome}`;
     node.dataset.index = String(index);
-    node.style.left = `${item.x}%`;
+    node.style.left = `${item.x}px`;
     node.style.top = `${item.y + visualYOffset}px`;
     node.setAttribute("aria-label", `${item.label}, ${statusFor(index)}`);
-    node.innerHTML = markerSvg(item.chapter);
+    node.innerHTML = markerMarkup(item.chapter);
     node.addEventListener("click", () => moveTo(index));
     nodesContainer.append(node);
   });
@@ -106,7 +111,7 @@ function updateView(animateCamera = false) {
   });
 
   const point = chapters[currentIndex];
-  traveler.style.left = `${point.x}%`;
+  traveler.style.left = `${point.x}px`;
   traveler.style.top = `${point.y + visualYOffset}px`;
   traveler.className = `explorer biome-${point.biome}${traveler.classList.contains("walking") ? " walking" : ""}`;
 
@@ -114,7 +119,6 @@ function updateView(animateCamera = false) {
   meterFill.style.width = `${percent}%`;
   progressPercent.textContent = `${percent}%`;
   completedText.textContent = `Chapters Completed: ${completed} / ${chapters.length}`;
-  routeGlow.style.strokeDashoffset = String(100 - percent);
   backButton.disabled = currentIndex === 0;
   nextButton.disabled = currentIndex === chapters.length - 1;
 
@@ -129,7 +133,7 @@ function centerOn(point, smooth = true) {
 
 function burstAt(point) {
   const width = mapWorld.clientWidth;
-  const originX = (point.x / 100) * width;
+  const originX = point.x;
   const originY = point.y + visualYOffset;
 
   for (let index = 0; index < 26; index += 1) {
@@ -237,8 +241,14 @@ window.addEventListener("resize", () => {
   updateView(false);
 });
 
-renderNodes();
-resizeCanvas();
-setupDragScroll();
-updateView(false);
-drawParticles();
+async function init() {
+  chapters = await loadChapters();
+  currentIndex = Math.min(currentIndex, chapters.length - 1);
+  renderNodes();
+  resizeCanvas();
+  setupDragScroll();
+  updateView(false);
+  drawParticles();
+}
+
+init();
