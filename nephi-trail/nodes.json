@@ -1,24 +1,156 @@
 [
-  { "chapter": 1, "label": "1 Nephi 1", "biome": "jerusalem", "x": 242, "y": 260 },
-  { "chapter": 2, "label": "1 Nephi 2", "biome": "jerusalem", "x": 330, "y": 420 },
-  { "chapter": 3, "label": "1 Nephi 3", "biome": "jerusalem", "x": 245, "y": 600 },
-  { "chapter": 4, "label": "1 Nephi 4", "biome": "jerusalem", "x": 178, "y": 780 },
-  { "chapter": 5, "label": "1 Nephi 5", "biome": "wilderness", "x": 250, "y": 970 },
-  { "chapter": 6, "label": "1 Nephi 6", "biome": "wilderness", "x": 205, "y": 1140 },
-  { "chapter": 7, "label": "1 Nephi 7", "biome": "wilderness", "x": 240, "y": 1320 },
-  { "chapter": 8, "label": "1 Nephi 8", "biome": "wilderness", "x": 326, "y": 1500 },
-  { "chapter": 9, "label": "1 Nephi 9", "biome": "wilderness", "x": 275, "y": 1670 },
-  { "chapter": 10, "label": "1 Nephi 10", "biome": "wilderness", "x": 220, "y": 1840 },
-  { "chapter": 11, "label": "1 Nephi 11", "biome": "coast", "x": 245, "y": 2020 },
-  { "chapter": 12, "label": "1 Nephi 12", "biome": "coast", "x": 190, "y": 2190 },
-  { "chapter": 13, "label": "1 Nephi 13", "biome": "coast", "x": 250, "y": 2355 },
-  { "chapter": 14, "label": "1 Nephi 14", "biome": "coast", "x": 330, "y": 2505 },
-  { "chapter": 15, "label": "1 Nephi 15", "biome": "coast", "x": 265, "y": 2650 },
-  { "chapter": 16, "label": "1 Nephi 16", "biome": "coast", "x": 210, "y": 2805 },
-  { "chapter": 17, "label": "1 Nephi 17", "biome": "coast", "x": 245, "y": 2945 },
-  { "chapter": 18, "label": "1 Nephi 18", "biome": "transition", "x": 270, "y": 3130 },
-  { "chapter": 19, "label": "1 Nephi 19", "biome": "jungle", "x": 248, "y": 3290 },
-  { "chapter": 20, "label": "1 Nephi 20", "biome": "jungle", "x": 290, "y": 3480 },
-  { "chapter": 21, "label": "1 Nephi 21", "biome": "jungle", "x": 235, "y": 3665 },
-  { "chapter": 22, "label": "1 Nephi 22", "biome": "jungle", "x": 302, "y": 3860 }
+  {
+    "chapter": 1,
+    "label": "1 Nephi 1",
+    "biome": "jerusalem",
+    "x": 238,
+    "y": 320
+  },
+  {
+    "chapter": 2,
+    "label": "1 Nephi 2",
+    "biome": "jerusalem",
+    "x": 200,
+    "y": 450
+  },
+  {
+    "chapter": 3,
+    "label": "1 Nephi 3",
+    "biome": "jerusalem",
+    "x": 238,
+    "y": 674
+  },
+  {
+    "chapter": 4,
+    "label": "1 Nephi 4",
+    "biome": "jerusalem",
+    "x": 210,
+    "y": 765
+  },
+  {
+    "chapter": 5,
+    "label": "1 Nephi 5",
+    "biome": "wilderness",
+    "x": 244,
+    "y": 991
+  },
+  {
+    "chapter": 6,
+    "label": "1 Nephi 6",
+    "biome": "wilderness",
+    "x": 226,
+    "y": 1157
+  },
+  {
+    "chapter": 7,
+    "label": "1 Nephi 7",
+    "biome": "wilderness",
+    "x": 187,
+    "y": 1315
+  },
+  {
+    "chapter": 8,
+    "label": "1 Nephi 8",
+    "biome": "wilderness",
+    "x": 186,
+    "y": 1507
+  },
+  {
+    "chapter": 9,
+    "label": "1 Nephi 9",
+    "biome": "wilderness",
+    "x": 207,
+    "y": 1677
+  },
+  {
+    "chapter": 10,
+    "label": "1 Nephi 10",
+    "biome": "wilderness",
+    "x": 202,
+    "y": 1830
+  },
+  {
+    "chapter": 11,
+    "label": "1 Nephi 11",
+    "biome": "coast",
+    "x": 222,
+    "y": 2047
+  },
+  {
+    "chapter": 12,
+    "label": "1 Nephi 12",
+    "biome": "coast",
+    "x": 190,
+    "y": 2207
+  },
+  {
+    "chapter": 13,
+    "label": "1 Nephi 13",
+    "biome": "coast",
+    "x": 170,
+    "y": 2394
+  },
+  {
+    "chapter": 14,
+    "label": "1 Nephi 14",
+    "biome": "coast",
+    "x": 306,
+    "y": 2507
+  },
+  {
+    "chapter": 15,
+    "label": "1 Nephi 15",
+    "biome": "coast",
+    "x": 265,
+    "y": 2650
+  },
+  {
+    "chapter": 16,
+    "label": "1 Nephi 16",
+    "biome": "coast",
+    "x": 223,
+    "y": 2785
+  },
+  {
+    "chapter": 17,
+    "label": "1 Nephi 17",
+    "biome": "coast",
+    "x": 245,
+    "y": 2945
+  },
+  {
+    "chapter": 18,
+    "label": "1 Nephi 18",
+    "biome": "transition",
+    "x": 318,
+    "y": 3120
+  },
+  {
+    "chapter": 19,
+    "label": "1 Nephi 19",
+    "biome": "jungle",
+    "x": 275,
+    "y": 3298
+  },
+  {
+    "chapter": 20,
+    "label": "1 Nephi 20",
+    "biome": "jungle",
+    "x": 190,
+    "y": 3456
+  },
+  {
+    "chapter": 21,
+    "label": "1 Nephi 21",
+    "biome": "jungle",
+    "x": 247,
+    "y": 3624
+  },
+  {
+    "chapter": 22,
+    "label": "1 Nephi 22",
+    "biome": "jungle",
+    "x": 307,
+    "y": 3795
+  }
 ]
