@@ -441,7 +441,7 @@ button {
 
 .explorer {
   z-index: 32;
-  width: clamp(58px, 15vw, 80px);
+  width: clamp(66px, 17vw, 92px);
   translate: -50% -96%;
   pointer-events: none;
   filter: drop-shadow(0 12px 7px rgba(25, 16, 9, 0.42));
@@ -459,42 +459,56 @@ button {
 }
 
 .face,
-.neck {
+.neck,
+.arm,
+.wrist {
   fill: #b8703e;
   stroke: #3b2416;
   stroke-width: 3;
 }
 
-.hair {
+.hair,
+.back-hair,
+.side-hair {
   fill: #211611;
+  stroke: #3b2416;
+  stroke-width: 3;
 }
 
 .headband {
-  fill: #d6a537;
+  fill: #d7b35a;
   stroke: #3b2416;
-  stroke-width: 2;
+  stroke-width: 3;
 }
 
-.feather {
+.feather,
+.feather-stem {
   fill: #d64d3f;
   stroke: #3b2416;
-  stroke-width: 2;
+  stroke-width: 3;
 }
 
 .tunic {
-  fill: #d99337;
+  fill: #ead39a;
   stroke: #3b2416;
   stroke-width: 3;
 }
 
-.cloak {
-  fill: #257f7a;
+.cloak,
+.sash {
+  fill: #0d8aa2;
   stroke: #3b2416;
   stroke-width: 3;
+}
+
+.sash {
+  fill: #f3e4b5;
 }
 
 .belt,
-.leg {
+.belt-tie,
+.leg,
+.boot {
   fill: #4f321d;
   stroke: #2c1c13;
   stroke-width: 2;
@@ -508,12 +522,19 @@ button {
   fill: none;
   stroke: #23150f;
   stroke-linecap: round;
-  stroke-width: 2.5;
+  stroke-width: 4;
+}
+
+.cheek {
+  fill: none;
+  stroke: rgba(100, 52, 25, 0.42);
+  stroke-linecap: round;
+  stroke-width: 2;
 }
 
 .explorer.biome-jungle .cloak,
 .explorer.biome-transition .cloak {
-  fill: #3fa857;
+  fill: #158f52;
 }
 
 .explorer.biome-jungle .feather,
