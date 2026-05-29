@@ -221,6 +221,18 @@ h1 {
   text-align: center;
 }
 
+.site-links {
+  display: grid;
+  gap: 8px;
+  text-align: center;
+}
+
+.site-links a {
+  color: var(--accent);
+  font-weight: 800;
+  text-underline-offset: 4px;
+}
+
 @media (max-height: 720px) {
   .app-shell {
     gap: 11px;

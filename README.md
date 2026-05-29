@@ -8,6 +8,7 @@ A static mobile web app. It asks for GPS and device-orientation access, then poi
 - Lanikai Beach Compass: `https://glmorris1.github.io/happiest-compass/lanikai-beach/`
 - Perry High School Compass: `https://glmorris1.github.io/happiest-compass/perry-high-school/`
 - Pirate Treasure Compass: `https://glmorris1.github.io/happiest-compass/pirate-treasure/`
+- Utah Treasure Hunt Poem Archive: `https://glmorris1.github.io/happiest-compass/utah-treasure-hunt-archive/`
 
 ## Run locally
 
@@ -28,7 +29,7 @@ This repository includes a GitHub Actions workflow at `.github/workflows/pages.y
 3. Under Build and deployment, choose GitHub Actions.
 4. Push to `main` or run the workflow manually.
 
-The main app will publish at `https://glmorris1.github.io/happiest-compass/`, the Lanikai Beach page will publish at `https://glmorris1.github.io/happiest-compass/lanikai-beach/`, the Perry High School page will publish at `https://glmorris1.github.io/happiest-compass/perry-high-school/`, and the Pirate Treasure page will publish at `https://glmorris1.github.io/happiest-compass/pirate-treasure/`.
+The main app will publish at `https://glmorris1.github.io/happiest-compass/`, the Lanikai Beach page will publish at `https://glmorris1.github.io/happiest-compass/lanikai-beach/`, the Perry High School page will publish at `https://glmorris1.github.io/happiest-compass/perry-high-school/`, the Pirate Treasure page will publish at `https://glmorris1.github.io/happiest-compass/pirate-treasure/`, and the Utah Treasure Hunt Poem Archive will publish at `https://glmorris1.github.io/happiest-compass/utah-treasure-hunt-archive/`.
 
 ## Adjust the location
 
