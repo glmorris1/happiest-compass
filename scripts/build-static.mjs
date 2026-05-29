@@ -20,6 +20,7 @@ await copyIfPresent("assets/share-thumbnail-360.png", "dist/assets/share-thumbna
 await copyIfPresent("lanikai-beach", "dist/lanikai-beach");
 await copyIfPresent("perry-high-school", "dist/perry-high-school");
 await copyIfPresent("pirate-treasure", "dist/pirate-treasure");
+await copyIfPresent("utah-treasure-hunt-archive", "dist/utah-treasure-hunt-archive");
 await cp("minis.config.json", "dist/minis.config.json");
 
 async function copyIfPresent(from, to) {
