@@ -11,6 +11,14 @@ const METERS_PER_MILE = 1609.344;
 const FEET_PER_METER = 3.28084;
 const FEET_SWITCHOVER = 2640;
 const ARRIVAL_RADIUS_METERS = 3.048;
+const CLOSE_RANGE_METERS = 30.48;
+const FAR_LOCATION_REFRESH_MS = 3000;
+const CLOSE_LOCATION_REFRESH_MS = 750;
+const LOCATION_OPTIONS = {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 10000,
+};
 
 const distanceValue = document.querySelector("#distanceValue");
 const helperText = document.querySelector("#helperText");
@@ -22,6 +30,9 @@ let currentPosition = null;
 let currentHeading = 0;
 let hasHeading = false;
 let watchId = null;
+let locationPollId = null;
+let locationPollDelay = null;
+let isLocationActive = false;
 let needleRotation = 0;
 let hasArrived = false;
 
@@ -99,6 +110,52 @@ function maybeOpenArrival(distance) {
   window.location.assign("arrival.html");
 }
 
+function handleLocation(position) {
+  currentPosition = {
+    lat: position.coords.latitude,
+    lon: position.coords.longitude,
+  };
+  isLocationActive = true;
+  render();
+}
+
+function requestFreshLocation(ignoreErrors = false) {
+  navigator.geolocation.getCurrentPosition(
+    handleLocation,
+    (error) => {
+      if (!ignoreErrors) {
+        handleLocationError(error);
+      }
+    },
+    LOCATION_OPTIONS,
+  );
+}
+
+function setLocationPollDelay(delay) {
+  if (locationPollDelay === delay && locationPollId !== null) {
+    return;
+  }
+
+  if (locationPollId !== null) {
+    window.clearInterval(locationPollId);
+  }
+
+  locationPollDelay = delay;
+  locationPollId = window.setInterval(() => {
+    requestFreshLocation(true);
+  }, delay);
+}
+
+function handleLocationError(error) {
+  isLocationActive = false;
+  distanceValue.textContent = "Location needed";
+  distanceValue.classList.add("is-waiting");
+  helperText.textContent = error.message || "Allow location access to use the compass.";
+  startButton.disabled = false;
+  startButton.textContent = "Start compass";
+  startButton.classList.remove("is-live");
+}
+
 function render() {
   if (!currentPosition) {
     needleRotation = 0;
@@ -117,6 +174,7 @@ function render() {
   distanceValue.classList.remove("is-waiting");
   distanceValue.textContent = formatDistance(distance);
   needle.style.transform = `translateX(-50%) rotate(${needleRotation}deg)`;
+  setLocationPollDelay(distance <= CLOSE_RANGE_METERS ? CLOSE_LOCATION_REFRESH_MS : FAR_LOCATION_REFRESH_MS);
   maybeOpenArrival(distance);
 }
 
@@ -132,9 +190,14 @@ async function requestOrientationPermission() {
   }
 }
 
-function startLocationWatch() {
+function startLocationTracking() {
   if (!navigator.geolocation) {
     throw new Error("This browser does not support GPS location.");
+  }
+
+  if (isLocationActive) {
+    requestFreshLocation(true);
+    return;
   }
 
   if (watchId !== null) {
@@ -142,27 +205,13 @@ function startLocationWatch() {
   }
 
   watchId = navigator.geolocation.watchPosition(
-    (position) => {
-      currentPosition = {
-        lat: position.coords.latitude,
-        lon: position.coords.longitude,
-      };
-      render();
-    },
-    (error) => {
-      distanceValue.textContent = "Location blocked";
-      distanceValue.classList.add("is-waiting");
-      helperText.textContent = error.message || "Allow location access to use the compass.";
-      startButton.disabled = false;
-      startButton.textContent = "Start compass";
-      startButton.classList.remove("is-live");
-    },
-    {
-      enableHighAccuracy: true,
-      maximumAge: 2000,
-      timeout: 12000,
-    },
+    handleLocation,
+    handleLocationError,
+    LOCATION_OPTIONS,
   );
+
+  requestFreshLocation();
+  setLocationPollDelay(FAR_LOCATION_REFRESH_MS);
 }
 
 async function startCompass() {
@@ -173,7 +222,7 @@ async function startCompass() {
     await requestOrientationPermission();
     window.addEventListener("deviceorientation", handleOrientation, true);
     window.addEventListener("deviceorientationabsolute", handleOrientation, true);
-    startLocationWatch();
+    startLocationTracking();
     startButton.textContent = "Compass active";
     startButton.classList.add("is-live");
     helperText.textContent = "Follow the needle. The chest opens when you are within 10 feet.";
@@ -200,3 +249,11 @@ function handleOrientation(event) {
 startButton.addEventListener("click", startCompass);
 
 render();
+
+try {
+  startLocationTracking();
+} catch (error) {
+  distanceValue.textContent = "Location needed";
+  distanceValue.classList.add("is-waiting");
+  helperText.textContent = error.message || "Allow GPS access to show your current distance.";
+}
