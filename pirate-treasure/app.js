@@ -130,7 +130,7 @@ function render() {
 
   if (!currentPosition) {
     needleRotation = 0;
-    needle.style.transform = "translate(-50%, -100%) rotate(0deg)";
+    needle.style.transform = "translateX(-50%) rotate(0deg)";
     summaryDistance.textContent = "Awaiting location";
     directionValue.textContent = "--";
     degreeValue.textContent = "--";
@@ -150,7 +150,7 @@ function render() {
   summaryDistance.textContent = formatDistance(distance);
   directionValue.textContent = compassPoint(bearing);
   degreeValue.textContent = `${Math.round(bearing)}\u00b0`;
-  needle.style.transform = `translate(-50%, -100%) rotate(${needleRotation}deg)`;
+  needle.style.transform = `translateX(-50%) rotate(${needleRotation}deg)`;
   maybeOpenArrival(distance);
 }
 
