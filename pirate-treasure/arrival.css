@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  --shadow: #170e08;
+  --shadow: #1f1711;
 }
 
 * { box-sizing: border-box; }
@@ -8,28 +8,21 @@ html, body { min-height: 100%; }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 50% 45%, rgba(217, 154, 52, 0.28), transparent 38%),
-    linear-gradient(180deg, #422414, var(--shadow) 72%);
+  background: var(--shadow);
 }
 
 .arrival-shell {
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding:
-    max(16px, env(safe-area-inset-top))
-    max(16px, env(safe-area-inset-right))
-    max(16px, env(safe-area-inset-bottom))
-    max(16px, env(safe-area-inset-left));
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   overflow: hidden;
 }
 
 .arrival-art {
-  width: min(100%, 900px);
-  height: min(100svh, 900px);
+  width: 100vw;
+  height: 100svh;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
-  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.45));
 }
