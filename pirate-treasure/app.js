@@ -12,11 +12,7 @@ const FEET_PER_METER = 3.28084;
 const FEET_SWITCHOVER = 2640;
 const ARRIVAL_RADIUS_METERS = 3.048;
 
-const targetName = document.querySelector("#targetName");
-const summaryDistance = document.querySelector("#summaryDistance");
 const distanceValue = document.querySelector("#distanceValue");
-const directionValue = document.querySelector("#directionValue");
-const degreeValue = document.querySelector("#degreeValue");
 const helperText = document.querySelector("#helperText");
 const startButton = document.querySelector("#startButton");
 const needle = document.querySelector("#needle");
@@ -81,28 +77,6 @@ function formatDistance(meters) {
   return `${miles >= 10 ? miles.toFixed(1) : miles.toFixed(2)} mi`;
 }
 
-function compassPoint(degrees) {
-  const points = [
-    "N",
-    "NNE",
-    "NE",
-    "ENE",
-    "E",
-    "ESE",
-    "SE",
-    "SSE",
-    "S",
-    "SSW",
-    "SW",
-    "WSW",
-    "W",
-    "WNW",
-    "NW",
-    "NNW",
-  ];
-  return points[Math.round(normalizeDegrees(degrees) / 22.5) % points.length];
-}
-
 function getCompassHeading(event) {
   if (typeof event.webkitCompassHeading === "number") {
     return event.webkitCompassHeading;
@@ -126,14 +100,9 @@ function maybeOpenArrival(distance) {
 }
 
 function render() {
-  targetName.textContent = selectedTarget.name;
-
   if (!currentPosition) {
     needleRotation = 0;
     needle.style.transform = "translateX(-50%) rotate(0deg)";
-    summaryDistance.textContent = "Awaiting location";
-    directionValue.textContent = "--";
-    degreeValue.textContent = "--";
     return;
   }
 
@@ -147,9 +116,6 @@ function render() {
 
   distanceValue.classList.remove("is-waiting");
   distanceValue.textContent = formatDistance(distance);
-  summaryDistance.textContent = formatDistance(distance);
-  directionValue.textContent = compassPoint(bearing);
-  degreeValue.textContent = `${Math.round(bearing)}\u00b0`;
   needle.style.transform = `translateX(-50%) rotate(${needleRotation}deg)`;
   maybeOpenArrival(distance);
 }
