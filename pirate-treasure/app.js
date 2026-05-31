@@ -2,8 +2,8 @@ const DESTINATIONS = [
   {
     id: "pirate-treasure-target",
     name: "The Treasure",
-    lat: 33.251501,
-    lon: -111.657607,
+    lat: 40.98608,
+    lon: -111.923875,
   },
 ];
 
