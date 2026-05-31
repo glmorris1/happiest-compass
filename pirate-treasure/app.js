@@ -11,7 +11,6 @@ const METERS_PER_MILE = 1609.344;
 const FEET_PER_METER = 3.28084;
 const FEET_SWITCHOVER = 2640;
 const ARRIVAL_RADIUS_METERS = 3.048;
-const LOCATION_REFRESH_MS = 2500;
 
 const distanceValue = document.querySelector("#distanceValue");
 const helperText = document.querySelector("#helperText");
@@ -23,10 +22,8 @@ let currentPosition = null;
 let currentHeading = 0;
 let hasHeading = false;
 let watchId = null;
-let locationPollId = null;
 let needleRotation = 0;
 let hasArrived = false;
-let currentAccuracyMeters = null;
 
 function toRadians(degrees) {
   return degrees * (Math.PI / 180);
@@ -93,10 +90,7 @@ function getCompassHeading(event) {
 }
 
 function maybeOpenArrival(distance) {
-  const accuracyRadius = currentAccuracyMeters || 0;
-  const arrivalThreshold = ARRIVAL_RADIUS_METERS + accuracyRadius;
-
-  if (hasArrived || distance > arrivalThreshold) {
+  if (hasArrived || distance > ARRIVAL_RADIUS_METERS) {
     return;
   }
 
@@ -147,49 +141,28 @@ function startLocationWatch() {
     navigator.geolocation.clearWatch(watchId);
   }
 
-  if (locationPollId !== null) {
-    window.clearInterval(locationPollId);
-  }
-
-  const locationOptions = {
-    enableHighAccuracy: true,
-    maximumAge: 0,
-    timeout: 20000,
-  };
-
-  const handleLocation = (position) => {
-    currentPosition = {
-      lat: position.coords.latitude,
-      lon: position.coords.longitude,
-    };
-    currentAccuracyMeters =
-      typeof position.coords.accuracy === "number" ? position.coords.accuracy : null;
-    render();
-  };
-
-  const handleLocationError = (error) => {
-    distanceValue.textContent = "Location blocked";
-    distanceValue.classList.add("is-waiting");
-    helperText.textContent = error.message || "Allow location access to use the compass.";
-    startButton.disabled = false;
-    startButton.textContent = "Start compass";
-    startButton.classList.remove("is-live");
-    if (locationPollId !== null) {
-      window.clearInterval(locationPollId);
-      locationPollId = null;
-    }
-  };
-
   watchId = navigator.geolocation.watchPosition(
-    handleLocation,
-    handleLocationError,
-    locationOptions,
+    (position) => {
+      currentPosition = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      };
+      render();
+    },
+    (error) => {
+      distanceValue.textContent = "Location blocked";
+      distanceValue.classList.add("is-waiting");
+      helperText.textContent = error.message || "Allow location access to use the compass.";
+      startButton.disabled = false;
+      startButton.textContent = "Start compass";
+      startButton.classList.remove("is-live");
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 2000,
+      timeout: 12000,
+    },
   );
-
-  navigator.geolocation.getCurrentPosition(handleLocation, handleLocationError, locationOptions);
-  locationPollId = window.setInterval(() => {
-    navigator.geolocation.getCurrentPosition(handleLocation, () => {}, locationOptions);
-  }, LOCATION_REFRESH_MS);
 }
 
 async function startCompass() {
