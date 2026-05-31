@@ -13,7 +13,7 @@ const FEET_SWITCHOVER = 2640;
 const ARRIVAL_RADIUS_METERS = 3.048;
 const LOCATION_OPTIONS = {
   enableHighAccuracy: true,
-  maximumAge: 2000,
+  maximumAge: 0,
   timeout: 12000,
 };
 
@@ -29,6 +29,14 @@ let hasHeading = false;
 let watchId = null;
 let needleRotation = 0;
 let hasArrived = false;
+
+function showLocating() {
+  currentPosition = null;
+  distanceValue.textContent = "Locating...";
+  distanceValue.classList.add("is-waiting");
+  needleRotation = 0;
+  needle.style.transform = "translateX(-50%) rotate(0deg)";
+}
 
 function toRadians(degrees) {
   return degrees * (Math.PI / 180);
@@ -151,6 +159,8 @@ function startLocationWatch() {
     throw new Error("This browser does not support GPS location.");
   }
 
+  showLocating();
+
   if (watchId !== null) {
     navigator.geolocation.clearWatch(watchId);
   }
@@ -200,14 +210,23 @@ function handleOrientation(event) {
   render();
 }
 
+function restartLocationWatch() {
+  try {
+    startLocationWatch();
+  } catch (error) {
+    distanceValue.textContent = "Location needed";
+    distanceValue.classList.add("is-waiting");
+    helperText.textContent = error.message || "Allow GPS access to show your current distance.";
+  }
+}
+
 startButton.addEventListener("click", startCompass);
+window.addEventListener("pageshow", restartLocationWatch);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    restartLocationWatch();
+  }
+});
 
 render();
-
-try {
-  startLocationWatch();
-} catch (error) {
-  distanceValue.textContent = "Location needed";
-  distanceValue.classList.add("is-waiting");
-  helperText.textContent = error.message || "Allow GPS access to show your current distance.";
-}
+restartLocationWatch();
